@@ -7,7 +7,7 @@ import Dashboard from '../components/dashboard';
 export default function App() {
   return (
     <Layout>
-      <Router>
+      <Router basepath="/app">
         <PrivateRoute path="/dashboard" component={Dashboard} />
       </Router>
     </Layout>
