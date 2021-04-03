@@ -1,5 +1,6 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
+import netlifyIdentity from 'netlify-identity-widget';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -17,6 +18,8 @@ const GlobalStyle = createGlobalStyle`
     font-size: 10px;
   }
 `;
+
+netlifyIdentity.init();
 
 export default function Layout({ children }) {
   return (

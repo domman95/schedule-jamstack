@@ -1,21 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import Layout from '../components/layout';
-import Nav from '../components/nav';
+import Layout from './layout';
+import Nav from './nav';
 
 const Main = styled.main`
   padding-top: 7rem;
-
-  p {
-    font-size: 2rem;
-  }
 `;
 
-export default function HomePage() {
+export default function Dashboard() {
   return (
     <Layout>
       <Nav />
-      <Main></Main>
+      <Main>
+        <h1>Dashboard</h1>
+      </Main>
     </Layout>
   );
 }

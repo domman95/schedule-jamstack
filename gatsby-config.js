@@ -1,6 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: "schedule-jamstack",
+    title: 'schedule-jamstack',
   },
-  plugins: ["gatsby-plugin-styled-components"],
+  plugins: [
+    'gatsby-plugin-styled-components',
+    'gatsby-plugin-netlify-identity-widget',
+  ],
 };
