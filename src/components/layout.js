@@ -1,6 +1,7 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import netlifyIdentity from 'netlify-identity-widget';
+import { navigate } from 'gatsby-link';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {

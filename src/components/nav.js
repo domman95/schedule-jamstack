@@ -1,5 +1,5 @@
 import React from 'react';
-import { navigate } from 'gatsby';
+import { navigate, Link } from 'gatsby';
 import styled from 'styled-components';
 import netlifyIdentity from 'netlify-identity-widget';
 
@@ -18,7 +18,60 @@ const StyledNav = styled.nav`
   .logo {
     font-size: 2.6rem;
     font-weight: bold;
-    color: var(--blue);
+
+    a {
+      text-decoration: none;
+      color: var(--blue);
+    }
+  }
+
+  .navlinks {
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex: 1;
+    padding: 0 6rem;
+    height: calc(100% - 2rem);
+    gap: 2rem;
+
+    a {
+      position: relative;
+      font-size: 1.6rem;
+      color: black;
+      text-decoration: none;
+      overflow: hidden;
+
+      &.active {
+        font-weight: bold;
+        color: #0075ff;
+      }
+
+      &.active::before {
+        border-bottom: 2px solid #0075ff;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        border-bottom: 2px solid black;
+        transform: translateX(100%);
+        transition: transform 0.3s;
+      }
+
+      &:hover::before {
+        transform: translateX(0);
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      height: 100%;
+      left: 3rem;
+      border-left: 1px solid #cecece;
+    }
   }
 
   .authentication {
@@ -79,12 +132,29 @@ export default function Nav() {
     netlifyIdentity.currentUser().user_metadata &&
     netlifyIdentity.currentUser().user_metadata.full_name;
 
-  netlifyIdentity.on('login', () => navigate('/dashboard', { replace: true }));
+  netlifyIdentity.on('login', () =>
+    navigate('/app/dashboard', { replace: true })
+  );
   netlifyIdentity.on('logout', () => navigate('/', { replace: true }));
 
   return (
     <StyledNav>
-      <div className="logo">Schedule</div>
+      <div className="logo">
+        <Link to="/">Schedule</Link>
+      </div>
+      {isLoggedIn && (
+        <div className="navlinks">
+          <Link to="/app/dashboard" activeClassName="active">
+            dashboard
+          </Link>
+          <Link to="/app/calendar" activeClassName="active">
+            calendar
+          </Link>
+          <Link to="/app/customer-cards" activeClassName="active">
+            customer cards
+          </Link>
+        </div>
+      )}
       <div className="authentication">
         {isLoggedIn ? LoggedIn(name) : LoggedOut()}
       </div>
