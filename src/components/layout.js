@@ -19,8 +19,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-netlifyIdentity.init();
-
 export default function Layout({ children }) {
   return (
     <>
