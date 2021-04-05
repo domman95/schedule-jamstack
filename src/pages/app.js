@@ -7,6 +7,13 @@ import Dashboard from '../components/dashboard';
 import Calendar from '../components/calendar';
 import CustomerCards from '../components/customer-cards';
 import netlifyIdentity from 'netlify-identity-widget';
+import styled from 'styled-components';
+import Nav from '../components/nav';
+
+const AppWrapper = styled.main`
+  padding-top: 7rem;
+  height: 100vh;
+`;
 
 export default function App({ location }) {
   const isLoggedIn = netlifyIdentity.currentUser();
@@ -18,11 +25,14 @@ export default function App({ location }) {
 
   return (
     <Layout>
-      <Router>
-        <PrivateRoute path="/app/dashboard" component={Dashboard} />
-        <PrivateRoute path="/app/calendar" component={Calendar} />
-        <PrivateRoute path="/app/customer-cards" component={CustomerCards} />
-      </Router>
+      <Nav />
+      <AppWrapper>
+        <Router>
+          <PrivateRoute path="/app/dashboard" component={Dashboard} />
+          <PrivateRoute path="/app/calendar" component={Calendar} />
+          <PrivateRoute path="/app/customer-cards" component={CustomerCards} />
+        </Router>
+      </AppWrapper>
     </Layout>
   );
 }

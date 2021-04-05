@@ -1,7 +1,5 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
-import netlifyIdentity from 'netlify-identity-widget';
-import { navigate } from 'gatsby-link';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -14,9 +12,15 @@ const GlobalStyle = createGlobalStyle`
     --blue: #0075ff;
   }
 
+  // set height 100% for @reach/router's rendered divs
+  div [tabindex]{
+    height: 100%;
+  }
+
   html {
     font-family: sans-serif;
     font-size: 10px;
+    background-color: #f5f5f5;
   }
 `;
 
