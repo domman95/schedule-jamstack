@@ -16,6 +16,8 @@ export default function App({ location }) {
     return null;
   }
 
+  console.log(isLoggedIn);
+
   return (
     <Layout>
       <Router>

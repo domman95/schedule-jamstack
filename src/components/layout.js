@@ -1,7 +1,5 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
-import netlifyIdentity from 'netlify-identity-widget';
-import { navigate } from 'gatsby-link';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -17,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
   html {
     font-family: sans-serif;
     font-size: 10px;
+    background-color: #f5f5f5;
   }
 `;
 
