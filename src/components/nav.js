@@ -30,18 +30,45 @@ const StyledNav = styled.nav`
     display: none;
     position: relative;
     width: 2.5rem;
-    height: 2.5rem;
-    justify-content: center;
+    height: 2rem;
+    justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    gap: 0.5rem;
     z-index: 1000;
+    cursor: pointer;
+
+    &.cross {
+      justify-content: center;
+
+      div {
+        transition: transform 0.1s ease-in-out;
+        transform-origin: center;
+      }
+      .second {
+        position: relative;
+        transform: rotate(45deg);
+
+        &::before {
+          position: absolute;
+          content: '';
+          width: 100%;
+          height: 100%;
+          background-color: black;
+          transform: rotate(90deg);
+        }
+      }
+
+      .first,
+      .third {
+        display: none;
+      }
+    }
 
     & div {
       height: 0.2rem;
       width: 100%;
       background-color: black;
-      border-radius: 2.5rema;
+      border-radius: 2.5rem;
     }
 
     @media (max-width: 768px) {
@@ -119,6 +146,7 @@ const NavLinks = styled.div`
       border: none;
       font-size: 1.6rem;
       background-color: transparent;
+      cursor: pointer;
 
       &.login,
       &.logout {
@@ -136,10 +164,11 @@ const NavLinks = styled.div`
   @media (max-width: 768px) {
     position: fixed;
     flex-direction: column;
+    align-items: flex-start;
     top: 0;
     right: 0;
     height: 100%;
-    padding: 7rem 2rem 2rem;
+    padding: 7rem 2rem 4rem;
     transform: ${({ open }) => (open ? 'translateX(0)' : 'translate(100%)')};
     transition: transform 0.3s ease-in-out;
     min-width: 300px;
@@ -147,10 +176,24 @@ const NavLinks = styled.div`
     .links {
       flex-direction: column;
       align-items: flex-start;
+      padding: 0 2rem;
+
+      a {
+        font-size: 2rem;
+      }
+
+      &::before {
+        display: none;
+      }
     }
 
     .authentication {
       flex-direction: column;
+      width: 100%;
+
+      button {
+        font-size: 2rem;
+      }
     }
   }
 `;
@@ -206,10 +249,13 @@ export default function Nav() {
           {isLoggedIn ? LoggedIn() : LoggedOut()}
         </div>
       </NavLinks>
-      <div className="hamburger" role="button" onClick={() => setOpen(!open)}>
-        <div />
-        <div />
-        <div />
+      <div
+        className={`hamburger ${open && 'cross'}`}
+        role="button"
+        onClick={() => setOpen(!open)}>
+        <div className="first" />
+        <div className="second" />
+        <div className="third" />
       </div>
     </StyledNav>
   );
