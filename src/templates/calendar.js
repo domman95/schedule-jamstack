@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -64,29 +64,6 @@ const WorkersWrapper = styled.div`
           }
         }
       }
-
-      .showList {
-        width: 1.5rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        div {
-          position: relative;
-          width: 100%;
-          border-bottom: 2px solid black;
-          transform: rotate(60deg);
-
-          &::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            border-bottom: 2px solid black;
-            transform: rotate(60deg);
-            transform-origin: 100%;
-          }
-        }
-      }
     }
   }
 
@@ -100,13 +77,15 @@ const WorkersWrapper = styled.div`
       width: 100%;
 
       li {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
         list-style: none;
         font-size: 1.6rem;
         padding: 0.5rem;
         border-bottom: 1px solid #cecece;
+        label {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
       }
     }
   }
@@ -125,10 +104,7 @@ export default function Calendar() {
         <div className="header">
           <p className="headTitle">Workers</p>
           <div className="buttons">
-            <div className="addWorker">
-              <div />
-            </div>
-            <div className="showList">
+            <div className="addWorker" role="button">
               <div />
             </div>
           </div>
@@ -138,26 +114,26 @@ export default function Calendar() {
             <li>
               <label>
                 <input type="checkbox" />
+                All
               </label>
-              All
             </li>
             <li>
               <label>
                 <input type="checkbox" />
+                Worker 1
               </label>
-              Worker 1
             </li>
             <li>
               <label>
                 <input type="checkbox" />
+                Worker 2
               </label>
-              Worker 2
             </li>
             <li>
               <label>
                 <input type="checkbox" />
+                Worker 3
               </label>
-              Worker 3
             </li>
           </ul>
         </div>

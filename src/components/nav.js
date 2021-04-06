@@ -252,7 +252,9 @@ export default function Nav() {
       <div
         className={`hamburger ${open && 'cross'}`}
         role="button"
-        onClick={() => setOpen(!open)}>
+        tabIndex={0}
+        onClick={() => setOpen(!open)}
+        onKeyDown={() => setOpen(!open)}>
         <div className="first" />
         <div className="second" />
         <div className="third" />
