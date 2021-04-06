@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import CalendarComponent from '../components/calendar';
+import { Context } from '../pages/app';
 
 const Container = styled.div`
   display: grid;
@@ -135,6 +136,8 @@ const ScheduleWrapper = styled.div`
 `;
 
 export default function Calendar() {
+  const { value, setValue } = useContext(Context);
+
   return (
     <Container>
       <CalendarWrapper className="calendar">
@@ -178,7 +181,9 @@ export default function Calendar() {
           </ul>
         </div>
       </WorkersWrapper>
-      <ScheduleWrapper className="schedule"></ScheduleWrapper>
+      <ScheduleWrapper className="schedule">
+        {value.format('DD-MM-YYYY')}
+      </ScheduleWrapper>
     </Container>
   );
 }

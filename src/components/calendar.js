@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 import buildCalendar from '../utils/buildCalendar';
+import { Context } from '../pages/app';
 
 const CalendarContainer = styled.div`
   display: grid;
@@ -60,7 +61,7 @@ const CalendarContainer = styled.div`
 
 export default function Calendar() {
   const [calendar, setCalendar] = useState([]);
-  const [value, setValue] = useState(moment());
+  const { value, setValue } = useContext(Context);
   const [today] = useState(value);
 
   const prevMonth = () => value.clone().subtract(1, 'month');
@@ -84,13 +85,16 @@ export default function Calendar() {
           <>
             <div className="namesOfDays">
               {calendar[0].map((week) => (
-                <div className="dayName">{week.format('ddd')}</div>
+                <div className="dayName" key={week._d}>
+                  {week.format('ddd')}
+                </div>
               ))}
             </div>
-            {calendar.map((week) => (
-              <div className="weeks">
+            {calendar.map((week, i) => (
+              <div className="weeks" key={week[i]._d}>
                 {week.map((day) => (
                   <div
+                    key={day._d}
                     onClick={() => setValue(day)}
                     className={`days ${
                       today.isSame(day, 'day')
