@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import CalendarComponent from '../components/calendar';
 
 const Container = styled.div`
   display: grid;
@@ -19,6 +20,43 @@ const Container = styled.div`
 const CalendarWrapper = styled.div`
   grid-column: 1 / 4;
   grid-row: 1 / 3;
+  margin: 1rem 2rem;
+  padding: 2rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+      font-weight: bold;
+      font-size: 1.8rem;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+
+      div {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-bottom: 2px solid black;
+        cursor: pointer;
+
+        &.prevDate {
+          border-left: 2px solid black;
+          transform: rotate(45deg);
+        }
+
+        &.nextDate {
+          border-right: 2px solid black;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+  }
 `;
 
 const WorkersWrapper = styled.div`
@@ -26,7 +64,7 @@ const WorkersWrapper = styled.div`
   grid-row: 3 / -1;
   max-height: 350px;
   margin: 1rem 2rem;
-  padding: 1rem 2rem;
+  padding: 2rem;
 
   .header {
     display: flex;
@@ -99,7 +137,9 @@ const ScheduleWrapper = styled.div`
 export default function Calendar() {
   return (
     <Container>
-      <CalendarWrapper className="calendar"></CalendarWrapper>
+      <CalendarWrapper className="calendar">
+        <CalendarComponent />
+      </CalendarWrapper>
       <WorkersWrapper className="workers">
         <div className="header">
           <p className="headTitle">Workers</p>
