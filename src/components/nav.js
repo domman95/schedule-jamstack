@@ -172,6 +172,7 @@ const NavLinks = styled.div`
     transform: ${({ open }) => (open ? 'translateX(0)' : 'translate(100%)')};
     transition: transform 0.3s ease-in-out;
     min-width: 300px;
+    z-index: 1;
 
     .links {
       flex-direction: column;

@@ -1,8 +1,52 @@
 import React, { useEffect, useState, useContext } from 'react';
-import moment from 'moment';
 import styled from 'styled-components';
 import buildCalendar from '../utils/buildCalendar';
 import { Context } from '../pages/app';
+
+const CalendarWrapper = styled.div`
+  grid-column: 1 / 4;
+  grid-row: 1 / 3;
+  margin: 1rem 2rem;
+  padding: 2rem;
+  min-height: 350px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+      font-weight: bold;
+      font-size: 1.8rem;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+
+      button {
+        width: 1.5rem;
+        height: 1.5rem;
+        border: none;
+        border-bottom: 2px solid black;
+        cursor: pointer;
+        background-color: transparent;
+
+        &.prevDate {
+          border-left: 2px solid black;
+          transform: rotate(45deg);
+        }
+
+        &.nextDate {
+          border-right: 2px solid black;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+  }
+`;
 
 const CalendarContainer = styled.div`
   display: grid;
@@ -72,12 +116,12 @@ export default function Calendar() {
   }, [value]);
 
   return (
-    <>
+    <CalendarWrapper id="calendar">
       <div className="header">
         <p className="headTitle">{value.format('MMMM YYYY')}</p>
         <div className="buttons">
-          <div className="prevDate" onClick={() => setValue(prevMonth())} />
-          <div className="nextDate" onClick={() => setValue(nextMonth())} />
+          <button className="prevDate" onClick={() => setValue(prevMonth())} />
+          <button className="nextDate" onClick={() => setValue(nextMonth())} />
         </div>
       </div>
       <CalendarContainer length={calendar.length}>
@@ -109,6 +153,6 @@ export default function Calendar() {
           </>
         )}
       </CalendarContainer>
-    </>
+    </CalendarWrapper>
   );
 }
