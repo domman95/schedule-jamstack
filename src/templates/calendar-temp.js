@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Calendar from '../components/calendar';
 import Schedule from '../components/schedule';
-import Workers from '../components/workers';
+import Workers from '../components/workersList';
 
 const Container = styled.div`
   display: grid;
@@ -13,9 +13,13 @@ const Container = styled.div`
   #calendar,
   #workers,
   #schedule {
-    background-color: white;
     border-radius: 1rem;
     margin: 1rem 2rem;
+  }
+
+  #calendar,
+  #workers {
+    background-color: white;
   }
 `;
 

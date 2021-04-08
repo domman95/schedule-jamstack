@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
   html {
     font-family: sans-serif;
     font-size: 10px;
-    background-color: #f5f5f5;
+    background-color: #f2f2f2;
   }
 `;
 

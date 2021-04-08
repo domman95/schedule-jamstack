@@ -24,25 +24,14 @@ const CalendarWrapper = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
+      gap: 2rem;
 
       button {
-        width: 1.5rem;
-        height: 1.5rem;
+        font-size: 2.6rem;
         border: none;
-        border-bottom: 2px solid black;
         cursor: pointer;
+        color: var(--blue);
         background-color: transparent;
-
-        &.prevDate {
-          border-left: 2px solid black;
-          transform: rotate(45deg);
-        }
-
-        &.nextDate {
-          border-right: 2px solid black;
-          transform: rotate(-45deg);
-        }
       }
     }
   }
@@ -120,8 +109,12 @@ export default function Calendar() {
       <div className="header">
         <p className="headTitle">{value.format('MMMM YYYY')}</p>
         <div className="buttons">
-          <button className="prevDate" onClick={() => setValue(prevMonth())} />
-          <button className="nextDate" onClick={() => setValue(nextMonth())} />
+          <button className="prevDate" onClick={() => setValue(prevMonth())}>
+            {String.fromCharCode(60)}
+          </button>
+          <button className="nextDate" onClick={() => setValue(nextMonth())}>
+            {String.fromCharCode(62)}
+          </button>
         </div>
       </div>
       <CalendarContainer length={calendar.length}>
