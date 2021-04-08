@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Context } from '../pages/app';
+import { hours } from '../utils/hours';
 
 const ScheduleWrapper = styled.div`
   display: flex;
@@ -75,6 +76,55 @@ const ScheduleMain = styled.div`
   margin-top: 2rem;
   border-radius: 1rem;
   background-color: white;
+  max-height: calc(100% - 60px);
+  overflow-y: scroll;
+
+  .day {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    flex: 1;
+
+    .label {
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      padding: 1.5rem 0;
+      gap: 0.5rem;
+      position: sticky;
+      top: 0;
+      left: 0;
+
+      .number {
+        font-size: 2.6rem;
+        color: var(--blue);
+        opacity: 0.75;
+      }
+
+      .name {
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        color: #cecece;
+        font-weight: bold;
+      }
+    }
+
+    &:nth-last-child(1) .column {
+      border-right: none;
+    }
+
+    .column {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: ${({ length }) => `repeat(${length}, 100px)`};
+      border-right: 1px solid #f2f2f2;
+    }
+  }
+`;
+
+const Hour = styled.div`
+  border-top: 1px solid #f2f2f2;
 `;
 
 export default function Schedule() {
@@ -89,8 +139,18 @@ export default function Schedule() {
     return `${fullNameOfCurrentMonth} ${firstDayOfWeek} - ${lastDayOfWeek}, ${currentYear}`;
   };
 
+  const startWeek = value.clone().startOf('week');
+  const endWeek = value.clone().endOf('week');
+  const day = startWeek.clone().subtract(1, 'day');
+  const calendar = [];
+
+  while (day.isBefore(endWeek, 'day')) {
+    calendar.push(day.add(1, 'day').clone());
+  }
+
   return (
     <ScheduleWrapper id="schedule">
+      {console.log(calendar)}
       <div className="header">
         <div className="currentScheduleDate">
           <p className="headTitle">{currentDate()}</p>
@@ -107,7 +167,21 @@ export default function Schedule() {
           <button className="addVisit">{String.fromCharCode(43)} add</button>
         </div>
       </div>
-      <ScheduleMain></ScheduleMain>
+      <ScheduleMain length={hours.length}>
+        {calendar.map((item) => (
+          <div className="day">
+            <div className="label">
+              <p className="number">{item.format('DD')}</p>
+              <p className="name">{item.format('dddd')}</p>
+            </div>
+            <div className="column">
+              {hours.map((item) => (
+                <Hour value={item} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </ScheduleMain>
     </ScheduleWrapper>
   );
 }
