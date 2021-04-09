@@ -10,6 +10,10 @@ const CalendarWrapper = styled.div`
   padding: 2rem;
   min-height: 350px;
 
+  @media (max-width: 768px) {
+    min-height: ${({ show }) => (show ? '350px' : 'auto')};
+  }
+
   .header {
     display: flex;
     justify-content: space-between;
@@ -45,6 +49,10 @@ const CalendarContainer = styled.div`
   padding: 2rem 0;
   gap: 1rem;
   font-size: 1.6rem;
+
+  @media (max-width: 768px) {
+    display: ${({ show }) => (show ? 'grid' : 'none')};
+  }
 
   .namesOfDays {
     font-size: 1.2rem;
@@ -94,6 +102,7 @@ const CalendarContainer = styled.div`
 
 export default function Calendar() {
   const [calendar, setCalendar] = useState([]);
+  const [show, setShow] = useState(false);
   const { value, setValue } = useContext(Context);
   const [today] = useState(value);
 
@@ -105,9 +114,11 @@ export default function Calendar() {
   }, [value]);
 
   return (
-    <CalendarWrapper id="calendar">
+    <CalendarWrapper id="calendar" show={show}>
       <div className="header">
-        <p className="headTitle">{value.format('MMMM YYYY')}</p>
+        <p className="headTitle" onClick={() => setShow(!show)}>
+          {value.format('MMMM YYYY')}
+        </p>
         <div className="buttons">
           <button className="prevDate" onClick={() => setValue(prevMonth())}>
             {String.fromCharCode(60)}
@@ -117,7 +128,7 @@ export default function Calendar() {
           </button>
         </div>
       </div>
-      <CalendarContainer length={calendar.length}>
+      <CalendarContainer length={calendar.length} show={show}>
         {calendar.length > 0 && (
           <>
             <div className="namesOfDays">

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Context } from '../pages/app';
 import { hours } from '../utils/hours';
+import moment from 'moment';
 
 const ScheduleWrapper = styled.div`
   display: flex;
@@ -14,6 +15,10 @@ const ScheduleWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
 
     .currentScheduleDate {
       display: flex;
@@ -70,14 +75,16 @@ const ScheduleWrapper = styled.div`
 
 const ScheduleMain = styled.div`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 200px);
   grid-template-rows: auto;
   flex: 1;
   margin-top: 2rem;
   border-radius: 1rem;
   background-color: white;
   max-height: calc(100% - 60px);
+  max-width: 100%;
   overflow-y: scroll;
+  overflow-x: visible;
 
   .day {
     display: grid;
@@ -95,9 +102,12 @@ const ScheduleMain = styled.div`
       position: sticky;
       top: 0;
       left: 0;
+      z-index: 1;
+      border-bottom: 1px solid var(--blue);
+      border-right: 1px solid #f2f2f2;
 
       .number {
-        font-size: 2.6rem;
+        font-size: 3.2rem;
         color: var(--blue);
         opacity: 0.75;
       }
@@ -124,7 +134,19 @@ const ScheduleMain = styled.div`
 `;
 
 const Hour = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(206, 206, 206, 0.25);
   border-top: 1px solid #f2f2f2;
+  font-weight: bold;
+  font-size: 4.4rem;
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    color: rgba(0, 117, 255, 0.25);
+  }
 `;
 
 export default function Schedule() {
@@ -150,7 +172,6 @@ export default function Schedule() {
 
   return (
     <ScheduleWrapper id="schedule">
-      {console.log(calendar)}
       <div className="header">
         <div className="currentScheduleDate">
           <p className="headTitle">{currentDate()}</p>
@@ -168,15 +189,17 @@ export default function Schedule() {
         </div>
       </div>
       <ScheduleMain length={hours.length}>
-        {calendar.map((item) => (
+        {calendar.map((day) => (
           <div className="day">
             <div className="label">
-              <p className="number">{item.format('DD')}</p>
-              <p className="name">{item.format('dddd')}</p>
+              <p className="number">{day.format('DD')}</p>
+              <p className="name">{day.format('dddd')}</p>
             </div>
             <div className="column">
-              {hours.map((item) => (
-                <Hour value={item} />
+              {hours.map((hour) => (
+                <Hour className="hour" onClick={() => console.log(day)}>
+                  {hour}
+                </Hour>
               ))}
             </div>
           </div>

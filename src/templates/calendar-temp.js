@@ -10,6 +10,30 @@ const Container = styled.div`
   grid-template-rows: repeat(3, 1fr);
   height: 100%;
 
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 1fr 500px;
+
+    #calendar,
+    #workers,
+    #schedule {
+      grid-column: 1 / -1;
+    }
+
+    #calendar {
+      grid-row: 1 / 2;
+    }
+
+    #workers {
+      grid-row: 2 / 3;
+    }
+
+    #schedule {
+      grid-row: 3 / -1;
+    }
+  }
+
   #calendar,
   #workers,
   #schedule {

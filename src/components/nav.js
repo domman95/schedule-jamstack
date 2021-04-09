@@ -15,6 +15,7 @@ const StyledNav = styled.nav`
   align-items: center;
   padding: 0 3rem;
   background-color: white;
+  z-index: 1000;
 
   .logo {
     font-size: 2.6rem;
@@ -173,6 +174,7 @@ const NavLinks = styled.div`
     transition: transform 0.3s ease-in-out;
     min-width: 300px;
     z-index: 1;
+    border-left: 1px solid var(--blue);
 
     .links {
       flex-direction: column;
