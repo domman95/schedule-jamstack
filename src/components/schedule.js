@@ -7,24 +7,38 @@ const ScheduleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   grid-column: 4 / -1;
-  grid-row: 1 / -1;
-  padding-top: 1rem;
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  @media (max-width: 768px) {
+    align-self: flex-start;
 
-    @media (max-width: 768px) {
+    .header {
       flex-direction: column;
       gap: 2rem;
 
       .currentScheduleDate {
         width: 100%;
         justify-content: space-between;
-        padding: 0 2rem;
+        padding: 0 1rem;
       }
     }
+
+    .manageScheduleButtons {
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 1rem;
+
+      .select,
+      .addVisit {
+        flex: 1;
+      }
+    }
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0 2rem;
 
     .currentScheduleDate {
       display: flex;
@@ -36,7 +50,7 @@ const ScheduleWrapper = styled.div`
         font-size: 2.4rem;
       }
 
-      .buttons {
+      .calendarPrevNextDateButtons {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -52,7 +66,7 @@ const ScheduleWrapper = styled.div`
       }
     }
 
-    .buttons {
+    .manageScheduleButtons {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -84,13 +98,17 @@ const ScheduleMain = styled.div`
   grid-template-columns: repeat(7, 200px);
   grid-template-rows: auto;
   flex: 1;
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
   border-radius: 1rem;
   background-color: white;
   max-height: calc(100% - 60px);
-  max-width: 100%;
   overflow-y: scroll;
   overflow-x: visible;
+
+  @media (max-width: 768px) {
+    max-height: 700px;
+    margin-bottom: 2rem;
+  }
 
   .day {
     display: grid;
@@ -181,12 +199,12 @@ export default function Schedule() {
       <div className="header">
         <div className="currentScheduleDate">
           <p className="headTitle">{currentDate()}</p>
-          <div className="buttons">
+          <div className="calendarPrevNextDateButtons">
             <button className="prevWeek">{String.fromCharCode(60)}</button>
             <button className="nextWeek">{String.fromCharCode(62)}</button>
           </div>
         </div>
-        <div className="buttons">
+        <div className="manageScheduleButtons">
           <select className="select" defaultChecked="week">
             <option label="week" />
             <option label="day" />

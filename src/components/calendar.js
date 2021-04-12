@@ -5,11 +5,9 @@ import { Context } from '../pages/app';
 
 const CalendarWrapper = styled.div`
   grid-column: 1 / 4;
-  grid-row: 1 / 3;
   padding: 2rem;
   height: auto;
   align-self: flex-start;
-  flex: 1;
 
   .header {
     display: flex;

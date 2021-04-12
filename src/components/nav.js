@@ -220,7 +220,7 @@ const LoggedOut = () => (
   </>
 );
 
-export default function Nav() {
+export default function Nav({ setHiddenNav }) {
   const [open, setOpen] = useState(false);
   const isLoggedIn = netlifyIdentity.currentUser();
 

@@ -7,15 +7,31 @@ import Workers from '../components/workersList';
 const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(9, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   height: 100%;
-  gap: 2rem;
-  padding: 2rem 0;
+  gap: 2rem 0;
+  padding: 1rem 0;
+
+  #calendar,
+  #workers,
+  #schedule {
+    height: 100%;
+  }
+
+  #calendar {
+    grid-row: 1 / 2;
+  }
+  #workers {
+    grid-row: 2 / -1;
+  }
+  #schedule {
+    grid-row: 1 / -1;
+  }
 
   @media (max-width: 768px) {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: auto-fit auto-fit 500px;
+    grid-template-rows: repeat(3, auto-fit);
 
     #calendar,
     #workers,
@@ -28,7 +44,7 @@ const Container = styled.div`
     }
 
     #workers {
-      grid-row: 2 / 3;
+      grid-row: 2 / -1;
     }
 
     #schedule {
@@ -39,7 +55,6 @@ const Container = styled.div`
   #calendar,
   #workers,
   #schedule {
-    height: auto;
     border-radius: 1rem;
     margin: 0 2rem;
   }
@@ -50,11 +65,11 @@ const Container = styled.div`
   }
 `;
 
-export default function CalendarTemp() {
+export default function CalendarTemp({ height }) {
   return (
     <Container>
       <Calendar />
-      <Workers />
+      <Workers height={height} />
       <Schedule />
     </Container>
   );

@@ -4,10 +4,9 @@ import Worker from './worker';
 
 const WorkersWrapper = styled.div`
   grid-column: 1 / 4;
-  grid-row: 3 / -1;
-  height: auto;
+  margin-top: 1rem;
+  max-height: 240px;
   align-self: flex-start;
-  max-height: 200px;
   padding: 2rem;
 
   .header {
@@ -38,24 +37,27 @@ const WorkersWrapper = styled.div`
 
   .workersList {
     display: flex;
+    align-self: flex-start;
     margin: 1rem 0;
     height: calc(100% - 40px);
+    overflow-y: scroll;
 
     @media (max-width: 768px) {
       display: ${({ show }) => (show ? 'flex' : 'none')};
+      max-height: 150px;
     }
 
     ul {
-      overflow: scroll;
       width: 100%;
     }
   }
 `;
 
-export default function Workers() {
+export default function Workers({ height }) {
   const [show, setShow] = useState(false);
   return (
-    <WorkersWrapper id="workers" show={show}>
+    <WorkersWrapper id="workers" show={show} height={height}>
+      {console.log(height)}
       <div className="header">
         <p className="headTitle" onClick={() => setShow(!show)}>
           Workers
@@ -69,6 +71,17 @@ export default function Workers() {
           <Worker>All</Worker>
           <Worker>Worker 1</Worker>
           <Worker>Worker 2</Worker>
+          <Worker>Worker 3</Worker>
+          <Worker>Worker 3</Worker>
+          <Worker>Worker 3</Worker>
+          <Worker>Worker 3</Worker>
+          <Worker>Worker 3</Worker>
+          <Worker>Worker 1</Worker>
+          <Worker>Worker 2</Worker>
+          <Worker>Worker 3</Worker>
+          <Worker>Worker 3</Worker>
+          <Worker>Worker 3</Worker>
+          <Worker>Worker 3</Worker>
           <Worker>Worker 3</Worker>
         </ul>
       </div>
