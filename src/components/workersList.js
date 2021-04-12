@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Worker from './worker';
 
 const WorkersWrapper = styled.div`
   grid-column: 1 / 4;
   grid-row: 3 / -1;
+  height: auto;
+  align-self: center;
   max-height: 200px;
-  margin: 1rem 2rem;
   padding: 2rem;
 
   .header {
@@ -40,6 +41,10 @@ const WorkersWrapper = styled.div`
     margin: 1rem 0;
     height: calc(100% - 40px);
 
+    @media (max-width: 768px) {
+      display: ${({ show }) => (show ? 'flex' : 'none')};
+    }
+
     ul {
       overflow: scroll;
       width: 100%;
@@ -48,10 +53,13 @@ const WorkersWrapper = styled.div`
 `;
 
 export default function Workers() {
+  const [show, setShow] = useState(false);
   return (
-    <WorkersWrapper id="workers">
+    <WorkersWrapper id="workers" show={show}>
       <div className="header">
-        <p className="headTitle">Workers</p>
+        <p className="headTitle" onClick={() => setShow(!show)}>
+          Workers
+        </p>
         <div className="buttons">
           <button className="addWorker">{String.fromCharCode(43)}</button>
         </div>

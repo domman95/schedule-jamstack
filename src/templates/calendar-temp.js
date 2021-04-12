@@ -9,11 +9,13 @@ const Container = styled.div`
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(3, 1fr);
   height: 100%;
+  gap: 2rem;
+  padding: 2rem 0;
 
   @media (max-width: 768px) {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 1fr 1fr 500px;
+    grid-template-rows: auto auto 500px;
 
     #calendar,
     #workers,
@@ -38,7 +40,7 @@ const Container = styled.div`
   #workers,
   #schedule {
     border-radius: 1rem;
-    margin: 1rem 2rem;
+    margin: 0 2rem;
   }
 
   #calendar,

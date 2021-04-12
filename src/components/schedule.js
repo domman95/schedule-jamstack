@@ -9,7 +9,7 @@ const ScheduleWrapper = styled.div`
   flex-direction: column;
   grid-column: 4 / -1;
   grid-row: 1 / -1;
-  padding: 1rem 2rem 0;
+  padding-top: 1rem;
 
   .header {
     display: flex;
@@ -18,6 +18,13 @@ const ScheduleWrapper = styled.div`
 
     @media (max-width: 768px) {
       flex-direction: column;
+      gap: 2rem;
+
+      .currentScheduleDate {
+        width: 100%;
+        justify-content: space-between;
+        padding: 0 2rem;
+      }
     }
 
     .currentScheduleDate {

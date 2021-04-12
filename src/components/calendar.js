@@ -6,13 +6,10 @@ import { Context } from '../pages/app';
 const CalendarWrapper = styled.div`
   grid-column: 1 / 4;
   grid-row: 1 / 3;
-  margin: 1rem 2rem;
   padding: 2rem;
-  min-height: 350px;
-
-  @media (max-width: 768px) {
-    min-height: ${({ show }) => (show ? '350px' : 'auto')};
-  }
+  height: auto;
+  align-self: center;
+  flex: 1;
 
   .header {
     display: flex;
