@@ -15,7 +15,7 @@ const Container = styled.div`
   @media (max-width: 768px) {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: auto auto 500px;
+    grid-template-rows: auto-fit auto-fit 500px;
 
     #calendar,
     #workers,
@@ -39,6 +39,7 @@ const Container = styled.div`
   #calendar,
   #workers,
   #schedule {
+    height: auto;
     border-radius: 1rem;
     margin: 0 2rem;
   }

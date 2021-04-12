@@ -6,7 +6,7 @@ const WorkersWrapper = styled.div`
   grid-column: 1 / 4;
   grid-row: 3 / -1;
   height: auto;
-  align-self: center;
+  align-self: flex-start;
   max-height: 200px;
   padding: 2rem;
 

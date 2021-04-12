@@ -8,7 +8,7 @@ const CalendarWrapper = styled.div`
   grid-row: 1 / 3;
   padding: 2rem;
   height: auto;
-  align-self: center;
+  align-self: flex-start;
   flex: 1;
 
   .header {

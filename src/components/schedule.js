@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Context } from '../pages/app';
 import { hours } from '../utils/hours';
-import moment from 'moment';
 
 const ScheduleWrapper = styled.div`
   display: flex;
