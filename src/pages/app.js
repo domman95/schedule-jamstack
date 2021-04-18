@@ -12,7 +12,7 @@ import Nav from '../components/nav';
 import moment from 'moment';
 
 const AppWrapper = styled.main`
-  padding-top: 7rem;
+  padding: 9rem 2rem 2rem;
   height: 100vh;
 `;
 

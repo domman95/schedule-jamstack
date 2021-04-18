@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
 
   :root {
     --blue: #0075ff;
+    --calendarBreakPoint: 1000px;
   }
 
   // set height 100% for @reach/router's rendered divs

@@ -15,7 +15,7 @@ const StyledNav = styled.nav`
   align-items: center;
   padding: 0 3rem;
   background-color: white;
-  z-index: 1000;
+  z-index: 10;
 
   .logo {
     font-size: 2.6rem;
@@ -142,6 +142,10 @@ const NavLinks = styled.div`
     flex: 1;
     gap: 10px;
 
+    .userName {
+      font-size: 1.6rem;
+    }
+
     button {
       padding: 1rem 2rem;
       border: none;
@@ -201,8 +205,9 @@ const NavLinks = styled.div`
   }
 `;
 
-const LoggedIn = () => (
+const LoggedIn = (isLoggedIn) => (
   <>
+    <p className="userName">Hi, {isLoggedIn.user_metadata.full_name}</p>
     <button className="logout" onClick={() => netlifyIdentity.logout()}>
       log out
     </button>
@@ -249,7 +254,7 @@ export default function Nav({ setHiddenNav }) {
           </div>
         )}
         <div className="authentication">
-          {isLoggedIn ? LoggedIn() : LoggedOut()}
+          {isLoggedIn ? LoggedIn(isLoggedIn) : LoggedOut()}
         </div>
       </NavLinks>
       <div

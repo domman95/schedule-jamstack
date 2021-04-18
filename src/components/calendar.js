@@ -2,12 +2,23 @@ import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import buildCalendar from '../utils/buildCalendar';
 import { Context } from '../pages/app';
+import { devices } from '../utils/breakpoints';
 
 const CalendarWrapper = styled.div`
-  grid-column: 1 / 4;
   padding: 2rem;
-  height: auto;
-  align-self: flex-start;
+  margin-bottom: 2rem;
+
+  @media ${devices.laptop} {
+    .header {
+      p {
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
 
   .header {
     display: flex;
@@ -23,7 +34,6 @@ const CalendarWrapper = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 2rem;
 
       button {
         font-size: 2.6rem;
@@ -31,22 +41,25 @@ const CalendarWrapper = styled.div`
         cursor: pointer;
         color: var(--blue);
         background-color: transparent;
+
+        &.nextDate {
+          margin-left: 2rem;
+        }
       }
     }
   }
 `;
 
 const CalendarContainer = styled.div`
-  display: grid;
+  display: ${({ show }) => (show ? 'grid' : 'none')};
   grid-template-columns: 1fr;
   grid-template-rows: ${({ length }) => `repeat(${length + 1}, 1fr)`};
   height: 100%;
-  padding: 2rem 0;
-  gap: 1rem;
+  padding: 1rem 0 2rem;
   font-size: 1.6rem;
 
-  @media (max-width: 768px) {
-    display: ${({ show }) => (show ? 'grid' : 'none')};
+  @media ${devices.laptop} {
+    display: grid;
   }
 
   .namesOfDays {
@@ -62,9 +75,7 @@ const CalendarContainer = styled.div`
     grid-template-columns: repeat(7, 1fr);
     align-items: center;
     justify-items: center;
-    gap: 1rem;
-
-    .days {
+    q .days {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -77,19 +88,19 @@ const CalendarContainer = styled.div`
       }
 
       &.today {
-        color: white;
         font-weight: bold;
-        background-color: #0075ff;
+        background-color: #cecece;
         border-radius: 50%;
         width: 3.5rem;
         height: 3.5rem;
       }
 
       &.selected {
-        background-color: #cecece;
+        background-color: var(--blue);
         border-radius: 50%;
         width: 3.5rem;
         height: 3.5rem;
+        color: white;
       }
     }
   }

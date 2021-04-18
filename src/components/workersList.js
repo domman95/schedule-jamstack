@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { devices } from '../utils/breakpoints';
 import Worker from './worker';
 
 const WorkersWrapper = styled.div`
-  grid-column: 1 / 4;
-  margin-top: 1rem;
-  max-height: 240px;
-  align-self: flex-start;
   padding: 2rem;
 
   .header {
@@ -23,7 +20,6 @@ const WorkersWrapper = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 20px;
 
       .addWorker {
         font-size: 2.6rem;
@@ -36,15 +32,15 @@ const WorkersWrapper = styled.div`
   }
 
   .workersList {
-    display: flex;
+    display: ${({ show }) => (show ? 'flex' : 'none')};
+    max-height: 200px;
     align-self: flex-start;
     margin: 1rem 0;
     height: calc(100% - 40px);
     overflow-y: scroll;
 
-    @media (max-width: 768px) {
-      display: ${({ show }) => (show ? 'flex' : 'none')};
-      max-height: 150px;
+    @media ${devices.laptop} {
+      display: flex;
     }
 
     ul {
@@ -53,11 +49,10 @@ const WorkersWrapper = styled.div`
   }
 `;
 
-export default function Workers({ height }) {
+export default function Workers() {
   const [show, setShow] = useState(false);
   return (
-    <WorkersWrapper id="workers" show={show} height={height}>
-      {console.log(height)}
+    <WorkersWrapper id="workers" show={show}>
       <div className="header">
         <p className="headTitle" onClick={() => setShow(!show)}>
           Workers

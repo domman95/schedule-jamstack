@@ -2,48 +2,26 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Context } from '../pages/app';
 import { hours } from '../utils/hours';
+import moment from 'moment';
+import { devices } from '../utils/breakpoints';
 
 const ScheduleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  grid-column: 4 / -1;
-
-  @media (max-width: 768px) {
-    align-self: flex-start;
-
-    .header {
-      flex-direction: column;
-      gap: 2rem;
-
-      .currentScheduleDate {
-        width: 100%;
-        justify-content: space-between;
-        padding: 0 1rem;
-      }
-    }
-
-    .manageScheduleButtons {
-      justify-content: space-between;
-      width: 100%;
-      padding: 0 1rem;
-
-      .select,
-      .addVisit {
-        flex: 1;
-      }
-    }
-  }
+  padding: 2rem 0;
 
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 0 2rem;
+    flex-direction: column;
+    padding: 1rem;
 
     .currentScheduleDate {
       display: flex;
-      align-items: center;
-      gap: 1rem;
+      width: 100%;
+      justify-content: space-between;
+      padding-bottom: 1rem;
 
       .headTitle {
         font-weight: bold;
@@ -54,7 +32,7 @@ const ScheduleWrapper = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 2rem;
+        margin-left: 2rem;
 
         button {
           font-size: 2.6rem;
@@ -62,15 +40,20 @@ const ScheduleWrapper = styled.div`
           background-color: transparent;
           cursor: pointer;
           color: var(--blue);
+
+          &.nextWeek {
+            margin-left: 2rem;
+          }
         }
       }
     }
 
     .manageScheduleButtons {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      gap: 1rem;
+      width: 100%;
+      padding-bottom: 1rem;
 
       .select,
       .addVisit {
@@ -79,6 +62,7 @@ const ScheduleWrapper = styled.div`
         border-radius: 1rem;
         border: none;
         cursor: pointer;
+        flex: 1;
       }
 
       .select {
@@ -88,26 +72,43 @@ const ScheduleWrapper = styled.div`
       .addVisit {
         background-color: var(--blue);
         color: white;
+        margin-left: 1rem;
       }
+    }
+  }
+
+  @media ${devices.laptop} {
+    padding: 0 0 0 2rem;
+
+    .header {
+      flex-direction: row;
+
+      .currentScheduleDate {
+        align-items: center;
+        justify-content: flex-start;
+      }
+    }
+
+    .manageScheduleButtons {
+      justify-content: center;
     }
   }
 `;
 
 const ScheduleMain = styled.div`
   display: grid;
-  grid-template-columns: repeat(7, 200px);
+  grid-template-columns: repeat(7, 300px);
   grid-template-rows: auto;
   flex: 1;
-  /* margin-top: 2rem; */
+  max-height: 700px;
   border-radius: 1rem;
   background-color: white;
-  max-height: calc(100% - 60px);
   overflow-y: scroll;
   overflow-x: visible;
+  height: 100%;
 
-  @media (max-width: 768px) {
-    max-height: 700px;
-    margin-bottom: 2rem;
+  @media ${devices.laptop} {
+    max-height: 100%;
   }
 
   .day {
@@ -122,7 +123,6 @@ const ScheduleMain = styled.div`
       flex-direction: column;
       text-align: center;
       padding: 1.5rem 0;
-      gap: 0.5rem;
       position: sticky;
       top: 0;
       left: 0;
@@ -134,6 +134,7 @@ const ScheduleMain = styled.div`
         font-size: 3.2rem;
         color: var(--blue);
         opacity: 0.75;
+        margin-bottom: 0.5rem;
       }
 
       .name {
@@ -173,6 +174,8 @@ const Hour = styled.div`
   }
 `;
 
+const oneDay = [moment()]; // for tests - how looks one day view
+
 export default function Schedule() {
   const { value } = useContext(Context);
 
@@ -194,6 +197,14 @@ export default function Schedule() {
     calendar.push(day.add(1, 'day').clone());
   }
 
+  const getVisitDateTime = (date, g, m) => {
+    const day = date.format('MM DD YYYY');
+    const full = `${day} ${g}:${m}:00`;
+    const currentStringOfDate = moment(full)._d;
+
+    return moment(currentStringOfDate, true);
+  };
+
   return (
     <ScheduleWrapper id="schedule">
       <div className="header">
@@ -213,18 +224,24 @@ export default function Schedule() {
         </div>
       </div>
       <ScheduleMain length={hours.length}>
-        {calendar.map((day) => (
-          <div className="day">
+        {calendar.map((date) => (
+          <div className="day" key={date.format('DD/MM/YYYY')}>
             <div className="label">
-              <p className="number">{day.format('DD')}</p>
-              <p className="name">{day.format('dddd')}</p>
+              <p className="number">{date.format('DD')}</p>
+              <p className="name">{date.format('dddd')}</p>
             </div>
             <div className="column">
-              {hours.map((hour) => (
-                <Hour className="hour" onClick={() => console.log(day)}>
-                  {hour}
-                </Hour>
-              ))}
+              {hours.map(({ g, m }) => {
+                const test = getVisitDateTime(date, g, m);
+                return (
+                  <Hour
+                    key={getVisitDateTime(date, g, m)}
+                    className="hour"
+                    onClick={() => console.log(test)}>
+                    {`${g}:${m}`}
+                  </Hour>
+                );
+              })}
             </div>
           </div>
         ))}
