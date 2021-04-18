@@ -75,7 +75,7 @@ const CalendarContainer = styled.div`
     grid-template-columns: repeat(7, 1fr);
     align-items: center;
     justify-items: center;
-    q .days {
+    .days {
       display: flex;
       justify-content: center;
       align-items: center;
