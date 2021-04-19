@@ -8,18 +8,6 @@ const CalendarWrapper = styled.div`
   padding: 2rem;
   margin-bottom: 2rem;
 
-  @media ${devices.laptop} {
-    .header {
-      p {
-        cursor: pointer;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
-
   .header {
     display: flex;
     justify-content: space-between;
@@ -27,7 +15,12 @@ const CalendarWrapper = styled.div`
 
     p {
       font-weight: bold;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     .buttons {
@@ -45,6 +38,17 @@ const CalendarWrapper = styled.div`
         &.nextDate {
           margin-left: 2rem;
         }
+      }
+    }
+  }
+
+  @media ${devices.laptop} {
+    .header p {
+      cursor: auto;
+      font-size: 1.8rem;
+
+      &:hover {
+        text-decoration: none;
       }
     }
   }
@@ -75,6 +79,7 @@ const CalendarContainer = styled.div`
     grid-template-columns: repeat(7, 1fr);
     align-items: center;
     justify-items: center;
+
     .days {
       display: flex;
       justify-content: center;

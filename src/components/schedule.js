@@ -15,17 +15,18 @@ const ScheduleWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    padding: 1rem;
+    padding: 1rem 0;
 
     .currentScheduleDate {
       display: flex;
       width: 100%;
       justify-content: space-between;
+      align-items: center;
       padding-bottom: 1rem;
 
       .headTitle {
         font-weight: bold;
-        font-size: 2.4rem;
+        font-size: 1.8rem;
       }
 
       .calendarPrevNextDateButtons {
@@ -86,6 +87,10 @@ const ScheduleWrapper = styled.div`
       .currentScheduleDate {
         align-items: center;
         justify-content: flex-start;
+
+        .headTitle {
+          font-size: 2.4rem;
+        }
       }
     }
 

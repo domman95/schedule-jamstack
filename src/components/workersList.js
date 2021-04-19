@@ -13,7 +13,7 @@ const WorkersWrapper = styled.div`
 
     p {
       font-weight: bold;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
     }
 
     & .buttons {
@@ -28,6 +28,12 @@ const WorkersWrapper = styled.div`
         background-color: transparent;
         color: var(--blue);
       }
+    }
+  }
+
+  @media ${devices.laptop} {
+    .header p {
+      font-size: 1.8rem;
     }
   }
 

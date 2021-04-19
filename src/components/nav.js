@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { navigate, Link } from 'gatsby';
 import styled from 'styled-components';
 import netlifyIdentity from 'netlify-identity-widget';
+import { devices } from '../utils/breakpoints';
 
 const StyledNav = styled.nav`
   position: fixed;
@@ -17,6 +18,18 @@ const StyledNav = styled.nav`
   background-color: white;
   z-index: 10;
 
+  &::before {
+    display: ${({ open }) => (open ? 'block' : 'none')};
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.25);
+    z-index: 1;
+  }
+
   .logo {
     font-size: 2.6rem;
     font-weight: bold;
@@ -28,7 +41,7 @@ const StyledNav = styled.nav`
   }
 
   .hamburger {
-    display: none;
+    display: flex;
     position: relative;
     width: 2.5rem;
     height: 2rem;
@@ -72,8 +85,8 @@ const StyledNav = styled.nav`
       border-radius: 2.5rem;
     }
 
-    @media (max-width: 768px) {
-      display: flex;
+    @media ${devices.laptop} {
+      display: none;
     }
   }
 `;
@@ -91,7 +104,6 @@ const NavLinks = styled.div`
     align-items: center;
     position: relative;
     flex: 1;
-    gap: 2rem;
     height: 100%;
     padding: 0 6rem;
 
@@ -109,6 +121,7 @@ const NavLinks = styled.div`
       color: black;
       text-decoration: none;
       overflow: hidden;
+      margin-right: 2rem;
 
       &.active {
         font-weight: bold;
@@ -178,7 +191,6 @@ const NavLinks = styled.div`
     transition: transform 0.3s ease-in-out;
     min-width: 300px;
     z-index: 1;
-    border-left: 1px solid var(--blue);
 
     .links {
       flex-direction: column;
@@ -187,6 +199,7 @@ const NavLinks = styled.div`
 
       a {
         font-size: 2rem;
+        margin-bottom: 2rem;
       }
 
       &::before {
@@ -225,7 +238,7 @@ const LoggedOut = () => (
   </>
 );
 
-export default function Nav({ setHiddenNav }) {
+export default function Nav() {
   const [open, setOpen] = useState(false);
   const isLoggedIn = netlifyIdentity.currentUser();
 
@@ -235,7 +248,7 @@ export default function Nav({ setHiddenNav }) {
   netlifyIdentity.on('logout', () => navigate('/', { replace: true }));
 
   return (
-    <StyledNav>
+    <StyledNav open={open}>
       <div className="logo">
         <Link to="/">Schedule</Link>
       </div>
