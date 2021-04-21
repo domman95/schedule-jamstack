@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import AddVisitForm from '../components/addVisitForm';
 import Calendar from '../components/calendar';
 import Schedule from '../components/schedule';
 import Workers from '../components/workersList';
@@ -45,11 +46,14 @@ const Container = styled.div`
 `;
 
 export default function CalendarTemp({ height }) {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <Container>
       <Calendar />
       <Workers height={height} />
-      <Schedule />
+      <Schedule showModal={showModal} setShowModal={setShowModal} />
+      {showModal && <AddVisitForm setShowModal={setShowModal} />}
     </Container>
   );
 }

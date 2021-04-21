@@ -16,7 +16,7 @@ const StyledNav = styled.nav`
   align-items: center;
   padding: 0 3rem;
   background-color: white;
-  z-index: 10;
+  z-index: 2;
 
   &::before {
     display: ${({ open }) => (open ? 'block' : 'none')};
@@ -85,7 +85,7 @@ const StyledNav = styled.nav`
       border-radius: 2.5rem;
     }
 
-    @media ${devices.laptop} {
+    @media (min-width: 768px) {
       display: none;
     }
   }
@@ -122,6 +122,7 @@ const NavLinks = styled.div`
       text-decoration: none;
       overflow: hidden;
       margin-right: 2rem;
+      white-space: nowrap;
 
       &.active {
         font-weight: bold;
@@ -153,7 +154,6 @@ const NavLinks = styled.div`
     justify-content: flex-end;
     align-items: center;
     flex: 1;
-    gap: 10px;
 
     .userName {
       font-size: 1.6rem;
@@ -175,6 +175,7 @@ const NavLinks = styled.div`
         border-radius: 2.5rem;
         background-color: var(--blue);
         color: white;
+        margin-left: 1rem;
       }
     }
   }
@@ -200,6 +201,8 @@ const NavLinks = styled.div`
       a {
         font-size: 2rem;
         margin-bottom: 2rem;
+        width: 100%;
+        border-bottom: 1px solid #cecece;
       }
 
       &::before {
@@ -249,6 +252,7 @@ export default function Nav() {
 
   return (
     <StyledNav open={open}>
+      {console.log(isLoggedIn)}
       <div className="logo">
         <Link to="/">Schedule</Link>
       </div>

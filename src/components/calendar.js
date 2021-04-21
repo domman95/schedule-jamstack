@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import buildCalendar from '../utils/buildCalendar';
+import buildCalendar, { prevMonth, nextMonth } from '../utils/buildCalendar';
 import { Context } from '../pages/app';
 import { devices } from '../utils/breakpoints';
 
@@ -117,9 +117,6 @@ export default function Calendar() {
   const { value, setValue } = useContext(Context);
   const [today] = useState(value);
 
-  const prevMonth = () => value.clone().subtract(1, 'month');
-  const nextMonth = () => value.clone().add(1, 'month');
-
   useEffect(() => {
     setCalendar(buildCalendar(value));
   }, [value]);
@@ -131,10 +128,14 @@ export default function Calendar() {
           {value.format('MMMM YYYY')}
         </p>
         <div className="buttons">
-          <button className="prevDate" onClick={() => setValue(prevMonth())}>
+          <button
+            className="prevDate"
+            onClick={() => setValue(prevMonth(value))}>
             {String.fromCharCode(60)}
           </button>
-          <button className="nextDate" onClick={() => setValue(nextMonth())}>
+          <button
+            className="nextDate"
+            onClick={() => setValue(nextMonth(value))}>
             {String.fromCharCode(62)}
           </button>
         </div>

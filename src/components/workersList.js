@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { devices } from '../utils/breakpoints';
 import Worker from './worker';
@@ -55,8 +55,11 @@ const WorkersWrapper = styled.div`
   }
 `;
 
+const workers = ['worker 1', 'worker 2', 'worker 3'];
+
 export default function Workers() {
   const [show, setShow] = useState(false);
+
   return (
     <WorkersWrapper id="workers" show={show}>
       <div className="header">
@@ -67,25 +70,14 @@ export default function Workers() {
           <button className="addWorker">{String.fromCharCode(43)}</button>
         </div>
       </div>
-      <div className="workersList">
+      <form className="workersList">
         <ul>
-          <Worker>All</Worker>
-          <Worker>Worker 1</Worker>
-          <Worker>Worker 2</Worker>
-          <Worker>Worker 3</Worker>
-          <Worker>Worker 3</Worker>
-          <Worker>Worker 3</Worker>
-          <Worker>Worker 3</Worker>
-          <Worker>Worker 3</Worker>
-          <Worker>Worker 1</Worker>
-          <Worker>Worker 2</Worker>
-          <Worker>Worker 3</Worker>
-          <Worker>Worker 3</Worker>
-          <Worker>Worker 3</Worker>
-          <Worker>Worker 3</Worker>
-          <Worker>Worker 3</Worker>
+          <Worker />
+          {workers.map((name) => (
+            <Worker key={name}>{name}</Worker>
+          ))}
         </ul>
-      </div>
+      </form>
     </WorkersWrapper>
   );
 }

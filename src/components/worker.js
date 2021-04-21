@@ -14,11 +14,11 @@ const StyledWorker = styled.li`
   }
 `;
 
-export default function Worker({ children }) {
+export default function Worker({ children = 'All' }) {
   return (
     <StyledWorker>
       <label>
-        <input type="checkbox" />
+        <input type="checkbox" name="worker" value={children} />
         {children}
       </label>
     </StyledWorker>
