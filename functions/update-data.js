@@ -1,12 +1,11 @@
 const { query } = require('../src/utils/hasura');
 
 exports.handler = async (event) => {
-  const email = 'dominiklasek95@gmail.com';
-  const user_metadata = [
-    { name: 'name3' },
-    { name: 'name4' },
-    { name: 'name5' },
-  ];
+  const { email, data } = JSON.parse(event.body);
+
+  const newData = [{ name: 'name10' }, { name: 'name27' }, { name: 'name18' }];
+
+  const user_metadata = [...data, ...newData];
 
   const { update_companies_profiles } = await query({
     query: `

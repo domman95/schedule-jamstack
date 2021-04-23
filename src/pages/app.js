@@ -62,7 +62,6 @@ export default function App({ location }) {
     <Layout>
       <Nav />
       <Context.Provider value={contextData}>
-        {console.log(contextData)}
         <AppWrapper>
           <Router>
             <PrivateRoute path="/app/dashboard" component={Dashboard} />

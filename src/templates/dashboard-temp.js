@@ -6,7 +6,8 @@ export default function Dashboard() {
   return (
     <>
       <h1>Dashboard</h1>
-      {currentUserData ? (
+
+      {currentUserData && currentUserData.user_metadata ? (
         currentUserData.user_metadata.map(({ name }) => <p>{name}</p>)
       ) : (
         <p>loading...</p>

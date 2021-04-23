@@ -8,14 +8,21 @@ import buildSchedule from '../utils/buildSchedule';
 import { getVisitDateTime } from '../utils/getVisitDateTime';
 
 export default function Schedule({ showModal, setShowModal }) {
-  const { value, setValue } = useContext(Context);
+  const { value, setValue, currentUserData } = useContext(Context);
 
   async function updateCompaniesData() {
+    const email = currentUserData.email;
+    const data = currentUserData.user_metadata
+      ? currentUserData.user_metadata
+      : [];
+
     const result = await fetch('/.netlify/functions/update-data', {
       method: 'POST',
+      body: JSON.stringify({
+        email,
+        data,
+      }),
     });
-
-    console.log(result);
 
     return result;
   }
