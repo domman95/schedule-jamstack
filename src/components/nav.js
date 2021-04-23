@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { navigate, Link } from 'gatsby';
 import styled from 'styled-components';
 import netlifyIdentity from 'netlify-identity-widget';
-import { devices } from '../utils/breakpoints';
 
 const StyledNav = styled.nav`
   position: fixed;
@@ -245,14 +244,14 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
   const isLoggedIn = netlifyIdentity.currentUser();
 
-  netlifyIdentity.on('login', () =>
-    navigate('/app/dashboard', { replace: true })
-  );
+  netlifyIdentity.on('login', () => {
+    navigate('/app/dashboard', { replace: true });
+  });
+
   netlifyIdentity.on('logout', () => navigate('/', { replace: true }));
 
   return (
     <StyledNav open={open}>
-      {console.log(isLoggedIn)}
       <div className="logo">
         <Link to="/">Schedule</Link>
       </div>

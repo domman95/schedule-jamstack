@@ -7,25 +7,18 @@ import { currentDate } from '../utils/currentDate';
 import buildSchedule from '../utils/buildSchedule';
 import { getVisitDateTime } from '../utils/getVisitDateTime';
 
-const INITIAL_STATES = {
-  customer: {
-    firstName: '',
-    lastName: '',
-  },
-  worker: '',
-  date: '',
-  services: '',
-};
-
 export default function Schedule({ showModal, setShowModal }) {
-  const { value, setValue, newVisit } = useContext(Context);
+  const { value, setValue } = useContext(Context);
 
-  const getNewVisit = (value, date, g, m) => {
-    console.log({
-      date: getVisitDateTime(date, g, m),
-      worker: 'worker 1',
+  async function updateCompaniesData() {
+    const result = await fetch('/.netlify/functions/update-data', {
+      method: 'POST',
     });
-  };
+
+    console.log(result);
+
+    return result;
+  }
 
   return (
     <ScheduleWrapper id="schedule">
@@ -46,7 +39,7 @@ export default function Schedule({ showModal, setShowModal }) {
           </div>
         </div>
         <div className="manageScheduleButtons">
-          <button className="addVisit" onClick={() => setShowModal(!showModal)}>
+          <button className="addVisit" onClick={() => updateCompaniesData()}>
             Add another visit
           </button>
         </div>
