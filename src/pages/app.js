@@ -26,7 +26,6 @@ export default function App({ location }) {
     setValue,
     newVisit,
     setNewVisit,
-    setContextData,
     refreshData,
   });
 
