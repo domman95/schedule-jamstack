@@ -8,10 +8,11 @@ import buildSchedule from '../utils/buildSchedule';
 import { getVisitDateTime } from '../utils/getVisitDateTime';
 
 export default function Schedule({ showModal, setShowModal }) {
-  const { value, setValue, currentUserData } = useContext(Context);
+  const { value, setValue, currentUserData, refreshData } = useContext(Context);
 
   async function updateCompaniesData() {
     const email = currentUserData.email;
+    const name = currentUserData.name;
     const data = currentUserData.user_metadata
       ? currentUserData.user_metadata
       : [];
@@ -22,7 +23,7 @@ export default function Schedule({ showModal, setShowModal }) {
         email,
         data,
       }),
-    });
+    }).then(() => refreshData(email, name));
 
     return result;
   }

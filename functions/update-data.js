@@ -9,7 +9,7 @@ exports.handler = async (event) => {
 
   const { update_companies_profiles } = await query({
     query: `
-    mutation MyMutation($email: String = "", $user_metadata: json = []) {
+    mutation ($email: String = "", $user_metadata: json = []) {
       update_companies_profiles(where: {email: {_eq: $email}}, _set: {user_metadata: $user_metadata}) {
         affected_rows
       }

@@ -26,6 +26,8 @@ export default function App({ location }) {
     setValue,
     newVisit,
     setNewVisit,
+    setContextData,
+    refreshData,
   });
 
   useEffect(() => {
@@ -54,6 +56,25 @@ export default function App({ location }) {
         name: fullName,
       },
     });
+
+    return result;
+  }
+
+  async function refreshData(userEmail, fullName) {
+    const email = userEmail;
+    const name = fullName;
+
+    const result = await fetch('/.netlify/functions/refresh-data', {
+      method: 'GET',
+      headers: {
+        email,
+        name,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) =>
+        setContextData({ ...contextData, currentUserData: data })
+      );
 
     return result;
   }
