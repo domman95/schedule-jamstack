@@ -9,6 +9,7 @@ import { getVisitDateTime } from '../utils/getVisitDateTime';
 
 export default function Schedule({ showModal, setShowModal }) {
   const { value, setValue, currentUserData, refreshData } = useContext(Context);
+  const data = useContext(Context);
 
   async function updateCompaniesData() {
     const email = currentUserData.email;
@@ -30,6 +31,7 @@ export default function Schedule({ showModal, setShowModal }) {
 
   return (
     <ScheduleWrapper id="schedule">
+      {console.log(data)}
       <div className="header">
         <div className="currentScheduleDate">
           <p className="headTitle">{currentDate(value)}</p>

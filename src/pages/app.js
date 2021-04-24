@@ -22,7 +22,6 @@ export default function App({ location }) {
   const [value, setValue] = useState(moment());
   const [newVisit, setNewVisit] = useState({});
   const [contextData, setContextData] = useState({
-    value,
     setValue,
     newVisit,
     setNewVisit,
@@ -32,20 +31,20 @@ export default function App({ location }) {
   useEffect(() => {
     const isLoggedIn = netlifyIdentity.currentUser();
 
-    const { email } = isLoggedIn;
-    const { full_name } = isLoggedIn.user_metadata;
-
     if (!isLoggedIn && location.pathname !== '/app/') {
       navigate('/');
       return null;
     }
+
+    const { email } = isLoggedIn;
+    const { full_name } = isLoggedIn.user_metadata;
 
     checkIsFirstLogIn(email, full_name)
       .then((res) => res.json())
       .then((data) =>
         setContextData({ ...contextData, currentUserData: data })
       );
-  }, [netlifyIdentity]);
+  }, []);
 
   async function checkIsFirstLogIn(userEmail, fullName) {
     const result = await fetch('/.netlify/functions/get-current-database', {
@@ -81,7 +80,9 @@ export default function App({ location }) {
   return (
     <Layout>
       <Nav />
-      <Context.Provider value={contextData}>
+      <Context.Provider value={{ ...contextData, value }}>
+        {console.log(value)}
+        {console.log(contextData.value)}
         <AppWrapper>
           <Router>
             <PrivateRoute path="/app/dashboard" component={Dashboard} />
