@@ -244,6 +244,7 @@ export default function Nav() {
   const isLoggedIn = netlifyIdentity.currentUser();
 
   netlifyIdentity.on('login', () => {
+    netlifyIdentity.close();
     navigate('/app/dashboard', { replace: true });
   });
 
