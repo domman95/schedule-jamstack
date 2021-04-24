@@ -17,8 +17,6 @@ exports.handler = async (event) => {
     variables: { email },
   });
 
-  console.log(companies_profiles);
-
   const result = companies_profiles.find((profile) => profile.email === email);
 
   return {

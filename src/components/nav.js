@@ -220,9 +220,8 @@ const NavLinks = styled.div`
   }
 `;
 
-const LoggedIn = (isLoggedIn) => (
+const LoggedIn = () => (
   <>
-    <p className="userName">Hi, {isLoggedIn.user_metadata.full_name}</p>
     <button className="logout" onClick={() => netlifyIdentity.logout()}>
       log out
     </button>
@@ -270,7 +269,7 @@ export default function Nav() {
           </div>
         )}
         <div className="authentication">
-          {isLoggedIn ? LoggedIn(isLoggedIn) : LoggedOut()}
+          {isLoggedIn ? LoggedIn() : LoggedOut()}
         </div>
       </NavLinks>
       <div
