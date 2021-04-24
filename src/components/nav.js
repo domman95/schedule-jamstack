@@ -15,7 +15,7 @@ const StyledNav = styled.nav`
   align-items: center;
   padding: 0 3rem;
   background-color: white;
-  z-index: 2;
+  z-index: 3;
 
   &::before {
     display: ${({ open }) => (open ? 'block' : 'none')};

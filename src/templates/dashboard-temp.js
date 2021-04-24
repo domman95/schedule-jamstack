@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Loading } from '../components/styles/loading';
@@ -38,11 +39,13 @@ export default function Dashboard() {
         <>
           <h1>Hi, {currentUserData.name}!</h1>
           <div className="data">
-            <p className="title">Your data:</p>
+            <p className="title">Your visits:</p>
             <ul>
               {currentUserData.user_metadata ? (
-                currentUserData.user_metadata.map(({ name }) => (
-                  <li key={name}>{name}</li>
+                currentUserData.user_metadata.map(({ visit }) => (
+                  <li key={visit}>
+                    {moment(visit).format('DD/MM/YYYY hh:mm')}
+                  </li>
                 ))
               ) : (
                 <p className="noData">There's no data yet.</p>
@@ -51,16 +54,7 @@ export default function Dashboard() {
           </div>
         </>
       ) : (
-        <Loading className="lds-roller">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </Loading>
+        <Loading />
       )}
     </Container>
   );

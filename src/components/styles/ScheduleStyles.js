@@ -127,7 +127,7 @@ export const ScheduleMain = styled.div`
       position: sticky;
       top: 0;
       left: 0;
-      z-index: 1;
+      z-index: 2;
       border-bottom: 1px solid var(--blue);
       border-right: 1px solid #f2f2f2;
 
@@ -168,6 +168,7 @@ export const ScheduleMain = styled.div`
 `;
 
 export const Hour = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -180,5 +181,27 @@ export const Hour = styled.div`
 
   &:hover {
     color: rgba(0, 117, 255, 0.25);
+  }
+
+  .visit {
+    position: absolute;
+    top: 5px;
+    width: calc(100% - 10px);
+    height: calc(100% * 2 - 10px);
+    /* background-color: rgba(0, 117, 255, 0.75); */
+    background-color: white;
+    border: 1px solid var(--blue);
+    border-radius: 1rem;
+    z-index: 1;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 1rem;
+      height: 100%;
+      top: 0;
+      background-color: var(--blue);
+    }
   }
 `;

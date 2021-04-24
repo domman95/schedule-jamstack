@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Context } from '../pages/app';
+import moment from 'moment';
 import { hours } from '../utils/hours';
 import { nextMonth, prevMonth } from '../utils/buildCalendar';
 import { Hour, ScheduleMain, ScheduleWrapper } from './styles/ScheduleStyles';
@@ -9,7 +10,6 @@ import { getVisitDateTime } from '../utils/getVisitDateTime';
 
 export default function Schedule({ showModal, setShowModal }) {
   const { value, setValue, currentUserData, refreshData } = useContext(Context);
-  const data = useContext(Context);
 
   async function updateCompaniesData() {
     const email = currentUserData.email;
@@ -31,7 +31,6 @@ export default function Schedule({ showModal, setShowModal }) {
 
   return (
     <ScheduleWrapper id="schedule">
-      {console.log(data)}
       <div className="header">
         <div className="currentScheduleDate">
           <p className="headTitle">{currentDate(value)}</p>
@@ -49,7 +48,7 @@ export default function Schedule({ showModal, setShowModal }) {
           </div>
         </div>
         <div className="manageScheduleButtons">
-          <button className="addVisit" onClick={() => updateCompaniesData()}>
+          <button className="addVisit" onClick={() => setShowModal(!showModal)}>
             Add another visit
           </button>
         </div>
@@ -70,6 +69,14 @@ export default function Schedule({ showModal, setShowModal }) {
                     className="hour"
                     onClick={() => console.log(test)}>
                     {`${g}:${m}`}
+                    {currentUserData &&
+                      currentUserData.user_metadata &&
+                      currentUserData.user_metadata.map(
+                        ({ visit }) =>
+                          test.isSame(moment(visit)) && (
+                            <div className="visit" key={visit} />
+                          )
+                      )}
                   </Hour>
                 );
               })}

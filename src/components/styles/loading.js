@@ -1,6 +1,20 @@
+import React from 'react';
 import styled from 'styled-components';
 
-export const Loading = styled.div`
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: calc(100% - 7rem);
+  position: fixed;
+  top: 7rem;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.05);
+  z-index: 10;
+`;
+
+const LoadingStyled = styled.div`
   &.lds-roller {
     display: inline-block;
     position: relative;
@@ -87,3 +101,18 @@ export const Loading = styled.div`
     }
   }
 `;
+
+export const Loading = () => (
+  <Container>
+    <LoadingStyled className="lds-roller">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </LoadingStyled>
+  </Container>
+);

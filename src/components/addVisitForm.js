@@ -7,15 +7,15 @@ const Modal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100vw;
-  height: 100vh;
+  width: 90%;
+  height: 90%;
+  border-radius: 1rem;
   background-color: white;
   z-index: 10;
 
   @media ${devices.laptop} {
-    width: 80vw;
-    height: 80vh;
-    border-radius: 1rem;
+    width: 80%;
+    height: 80%;
   }
 
   .cross {
