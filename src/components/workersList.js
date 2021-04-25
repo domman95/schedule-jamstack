@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { devices } from '../utils/breakpoints';
-import Worker from './worker';
+import { devices } from 'utils/breakpoints';
+import Worker from 'components/worker';
 
 const WorkersWrapper = styled.div`
   padding: 2rem;

@@ -1,12 +1,16 @@
 import React, { useContext } from 'react';
-import { Context } from '../pages/app';
+import { Context } from 'pages/app';
 import moment from 'moment';
-import { hours } from '../utils/hours';
-import { nextMonth, prevMonth } from '../utils/buildCalendar';
-import { Hour, ScheduleMain, ScheduleWrapper } from './styles/ScheduleStyles';
-import { currentDate } from '../utils/currentDate';
-import buildSchedule from '../utils/buildSchedule';
-import { getVisitDateTime } from '../utils/getVisitDateTime';
+import { hours } from 'utils/hours';
+import { nextMonth, prevMonth } from 'utils/buildCalendar';
+import {
+  Hour,
+  ScheduleMain,
+  ScheduleWrapper,
+} from 'components/styles/ScheduleStyles';
+import { currentDate } from 'utils/currentDate';
+import buildSchedule from 'utils/buildSchedule';
+import { getVisitDateTime } from 'utils/getVisitDateTime';
 
 export default function Schedule({ showModal, setShowModal }) {
   const { value, setValue, currentUserData, refreshData } = useContext(Context);

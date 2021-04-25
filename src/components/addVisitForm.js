@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { devices } from '../utils/breakpoints';
+import { devices } from 'utils/breakpoints';
 
 const Modal = styled.div`
   position: fixed;

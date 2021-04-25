@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Router } from '@reach/router';
 import { navigate } from 'gatsby';
-import Layout from '../components/layout';
-import PrivateRoute from '../components/private-route';
-import Dashboard from '../templates/dashboard-temp';
-import Calendar from '../templates/calendar-temp';
-import CustomerCards from '../templates/customer-cards-temp';
+import Layout from 'components/layout';
+import PrivateRoute from 'components/private-route';
+import Dashboard from 'templates/dashboard-temp';
+import Calendar from 'templates/calendar-temp';
+import CustomerCards from 'templates/customer-cards-temp';
 import netlifyIdentity from 'netlify-identity-widget';
 import styled from 'styled-components';
-import Nav from '../components/nav';
+import Nav from 'components/nav';
 import moment from 'moment';
 
 const AppWrapper = styled.main`

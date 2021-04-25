@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import AddVisitForm from '../components/addVisitForm';
-import Calendar from '../components/calendar';
-import Schedule from '../components/schedule';
-import Workers from '../components/workersList';
-import { devices } from '../utils/breakpoints';
+import AddVisitForm from 'components/addVisitForm';
+import Calendar from 'components/calendar';
+import Schedule from 'components/schedule';
+import Workers from 'components/workersList';
+import { devices } from 'utils/breakpoints';
 
 const Container = styled.div`
   display: flex;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import buildCalendar, { prevMonth, nextMonth } from '../utils/buildCalendar';
-import { Context } from '../pages/app';
-import { devices } from '../utils/breakpoints';
+import buildCalendar, { prevMonth, nextMonth } from 'utils/buildCalendar';
+import { Context } from 'pages/app';
+import { devices } from 'utils/breakpoints';
 
 const CalendarWrapper = styled.div`
   padding: 2rem;
