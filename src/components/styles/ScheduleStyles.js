@@ -193,7 +193,7 @@ export const Hour = styled.div`
     border: 1px solid var(--blue);
     border-radius: 1rem;
     z-index: 1;
-    /* overflow: hidden; */
+    overflow: hidden;
 
     &::before {
       content: '';

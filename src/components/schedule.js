@@ -16,11 +16,8 @@ export default function Schedule({ showModal, setShowModal }) {
   const { value, setValue, currentUserData, refreshData } = useContext(Context);
 
   async function updateCompaniesData() {
-    const email = currentUserData.email;
-    const name = currentUserData.name;
-    const data = currentUserData.user_metadata
-      ? currentUserData.user_metadata
-      : [];
+    const { email, name, user_metadata } = currentUserData;
+    const data = currentUserData ? user_metadata : [];
 
     const result = await fetch('/.netlify/functions/update-data', {
       method: 'POST',
@@ -78,7 +75,7 @@ export default function Schedule({ showModal, setShowModal }) {
                       currentUserData.user_metadata.map(
                         ({ visit }) =>
                           test.isSame(moment(visit)) && (
-                            <div className="visit" key={visit} />
+                            <div className="visit" />
                           )
                       )}
                   </Hour>
