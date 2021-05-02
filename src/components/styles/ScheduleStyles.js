@@ -59,7 +59,7 @@ export const ScheduleWrapper = styled.div`
         border: none;
         cursor: pointer;
         flex: 1;
-        background-color: var(--blue);
+        background: var(--blue);
         color: white;
       }
     }
@@ -163,45 +163,6 @@ export const ScheduleMain = styled.div`
       grid-template-columns: 1fr;
       grid-template-rows: ${({ length }) => `repeat(${length}, 100px)`};
       border-right: 1px solid #f2f2f2;
-    }
-  }
-`;
-
-export const Hour = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: rgba(206, 206, 206, 0.25);
-  border-top: 1px solid #f2f2f2;
-  font-weight: bold;
-  font-size: 4.4rem;
-  transition: 0.3s;
-  cursor: pointer;
-
-  &:hover {
-    color: rgba(0, 117, 255, 0.25);
-  }
-
-  .visit {
-    position: absolute;
-    top: 5px;
-    width: calc(100% - 10px);
-    height: calc(100% * 2 - 10px);
-    /* background-color: rgba(0, 117, 255, 0.75); */
-    background-color: white;
-    border: 1px solid var(--blue);
-    border-radius: 1rem;
-    z-index: 1;
-    overflow: hidden;
-
-    &::before {
-      content: '';
-      position: absolute;
-      width: 1rem;
-      height: 100%;
-      top: 0;
-      background-color: var(--blue);
     }
   }
 `;

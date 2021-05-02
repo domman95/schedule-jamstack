@@ -1,35 +1,20 @@
 import React, { useContext } from 'react';
 import { Context } from 'pages/app';
-import moment from 'moment';
 import { hours } from 'utils/hours';
-import { nextMonth, prevMonth } from 'utils/buildCalendar';
+import { nextWeek, prevWeek } from 'utils/buildCalendar';
 import {
-  Hour,
   ScheduleMain,
   ScheduleWrapper,
 } from 'components/styles/ScheduleStyles';
 import { currentDate } from 'utils/currentDate';
 import buildSchedule from 'utils/buildSchedule';
 import { getVisitDateTime } from 'utils/getVisitDateTime';
+import { Loading } from './styles/loading';
+import Hour from './Hour';
+import moment from 'moment';
 
 export default function Schedule({ showModal, setShowModal }) {
-  const { value, setValue, currentUserData, refreshData } = useContext(Context);
-
-  async function updateCompaniesData() {
-    const { email, name, user_metadata } = currentUserData;
-    const data = currentUserData ? user_metadata : [];
-
-    const result = await fetch('/.netlify/functions/update-data', {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        data,
-      }),
-    }).then(() => refreshData(email, name));
-
-    return result;
-  }
-
+  const { value, setValue, currentUserData } = useContext(Context);
   return (
     <ScheduleWrapper id="schedule">
       <div className="header">
@@ -38,12 +23,12 @@ export default function Schedule({ showModal, setShowModal }) {
           <div className="calendarPrevNextDateButtons">
             <button
               className="prevWeek"
-              onClick={() => setValue(prevMonth(value))}>
+              onClick={() => setValue(prevWeek(value))}>
               {String.fromCharCode(60)}
             </button>
             <button
               className="nextWeek"
-              onClick={() => setValue(nextMonth(value))}>
+              onClick={() => setValue(nextWeek(value))}>
               {String.fromCharCode(62)}
             </button>
           </div>
@@ -54,37 +39,49 @@ export default function Schedule({ showModal, setShowModal }) {
           </button>
         </div>
       </div>
-      <ScheduleMain length={hours.length}>
-        {buildSchedule(value).map((date) => (
-          <div className="day" key={date.format('DD/MM/YYYY')}>
-            <div className="label">
-              <p className="number">{date.format('DD')}</p>
-              <p className="name">{date.format('dddd')}</p>
+      {currentUserData ? (
+        <ScheduleMain length={hours.length}>
+          {buildSchedule(value).map((date) => (
+            <div className="day" key={date.format('DD/MM/YYYY')}>
+              <div className="label">
+                <p className="number">{date.format('DD')}</p>
+                <p className="name">{date.format('dddd')}</p>
+              </div>
+              <div className="column">
+                {hours.map(({ g, m }) => {
+                  const value = getVisitDateTime(date, g, m);
+                  const visits = currentUserData.user_metadata.find(
+                    ({ visit }) => value.isSame(moment(visit))
+                  );
+
+                  return (
+                    <Hour
+                      key={getVisitDateTime(date, g, m)}
+                      visits={visits}>{`${g}:${m}`}</Hour>
+                  );
+                })}
+                {/* {hours.map(({ g, m }) => {
+                  const test = getVisitDateTime(date, g, m);
+                  return (
+                    <Hour key={getVisitDateTime(date, g, m)} className="hour">
+                      {`${g}:${m}`}
+                      {currentUserData.user_metadata &&
+                        currentUserData.user_metadata.map(
+                          ({ visit }) =>
+                            test.isSame(moment(visit)) && (
+                              <Visit className="visit" />
+                            )
+                        )}
+                    </Hour>
+                  );
+                })} */}
+              </div>
             </div>
-            <div className="column">
-              {hours.map(({ g, m }) => {
-                const test = getVisitDateTime(date, g, m);
-                return (
-                  <Hour
-                    key={getVisitDateTime(date, g, m)}
-                    className="hour"
-                    onClick={() => console.log(test)}>
-                    {`${g}:${m}`}
-                    {currentUserData &&
-                      currentUserData.user_metadata &&
-                      currentUserData.user_metadata.map(
-                        ({ visit }) =>
-                          test.isSame(moment(visit)) && (
-                            <div className="visit" />
-                          )
-                      )}
-                  </Hour>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </ScheduleMain>
+          ))}
+        </ScheduleMain>
+      ) : (
+        <Loading />
+      )}
     </ScheduleWrapper>
   );
 }

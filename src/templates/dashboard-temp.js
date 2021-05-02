@@ -25,7 +25,6 @@ const Container = styled.div`
     }
   }
 
-  .loading,
   .noData {
     font-size: 1.6rem;
   }

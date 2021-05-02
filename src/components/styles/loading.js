@@ -5,13 +5,8 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: calc(100% - 7rem);
-  position: fixed;
-  top: 7rem;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.05);
-  z-index: 10;
+  width: 100%;
+  min-height: 200px;
 `;
 
 const LoadingStyled = styled.div`
