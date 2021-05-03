@@ -41,11 +41,14 @@ export default function Dashboard() {
             <p className="title">Your visits:</p>
             <ul>
               {currentUserData.user_metadata ? (
-                currentUserData.user_metadata.map(({ visit }) => (
-                  <li key={visit}>
-                    {moment(visit).format('DD/MM/YYYY hh:mm')}
-                  </li>
-                ))
+                currentUserData.user_metadata.visits.map(
+                  ({ start, end, customer }) => (
+                    <li key={start}>
+                      {customer} - {moment(start).format('DD/MM/YYYY hh:mm')} -{' '}
+                      {moment(end).format('hh:mm')}
+                    </li>
+                  )
+                )
               ) : (
                 <p className="noData">There's no data yet.</p>
               )}

@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
+import moment from 'moment';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -28,26 +29,91 @@ const HourStyled = styled.div`
 `;
 
 const Visit = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   position: absolute;
   top: 5px;
   left: 5px;
   width: calc(100% - 10px);
-  height: calc(100% - 10px);
+  height: ${({ length }) => length && `calc(100% * ${length} - 10px)`};
   background-color: white;
   border: 1px solid var(--blue);
   border-left: 10px solid var(--blue);
   border-radius: 1rem;
   z-index: 1;
   overflow: hidden;
-`;
+  cursor: pointer;
+  padding: 1rem;
+  transition: transform 0.3s;
 
-export default function Hour({ children, visits }) {
-  const [state, setState] = useState(children);
+  .customer {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+
+  .time {
+    font-size: 1.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--blue);
+
+    .separate {
+      border-bottom: 1px dashed var(--blue);
+      flex: 1;
+      margin: 0 1rem;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.01);
+  }
+`;
+const INITIAL_STATE = {
+  start: '',
+  end: '',
+  customer: '',
+};
+
+export default function Hour({ children, visit }) {
+  const [state, setState] = useState(INITIAL_STATE);
+
+  const { start, end, customer } = state;
+
+  useEffect(() => {
+    if (visit) {
+      setState({ ...visit });
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   visits && setVisit(visits.visit);
+  //   console.log(visit);
+  // }, []);
+
+  function lengthOfVisit(visit) {
+    const { start, end } = visit;
+    const startVisit = moment(start);
+    const endVisit = moment(end);
+    const result = endVisit.diff(startVisit, 'minutes');
+    return result / 30;
+  }
 
   return (
     <Container>
-      <HourStyled onClick={() => console.log(state)}>{children}</HourStyled>
-      {visits ? <Visit onClick={() => console.log(visits)} /> : null}
+      <HourStyled>{children}</HourStyled>
+      {/* {visit ? <Visit length={lengthOfVisit(visit)} /> : null} */}
+      {visit && (
+        <Visit length={lengthOfVisit(visit)}>
+          <p className="customer">{customer}</p>
+          <div className="time">
+            <p className="start">{moment(start).format('hh:mm')}</p>
+            <div className="separate" />
+            <p className="end">{moment(end).format('hh:mm')}</p>
+          </div>
+        </Visit>
+      )}
     </Container>
   );
 }

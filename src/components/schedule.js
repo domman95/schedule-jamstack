@@ -50,31 +50,12 @@ export default function Schedule({ showModal, setShowModal }) {
               <div className="column">
                 {hours.map(({ g, m }) => {
                   const value = getVisitDateTime(date, g, m);
-                  const visits = currentUserData.user_metadata.find(
-                    ({ visit }) => value.isSame(moment(visit))
+                  const visit = currentUserData.user_metadata.visits.find(
+                    ({ start }) => value.isSame(moment(start))
                   );
 
-                  return (
-                    <Hour
-                      key={getVisitDateTime(date, g, m)}
-                      visits={visits}>{`${g}:${m}`}</Hour>
-                  );
+                  return <Hour key={value} visit={visit}>{`${g}:${m}`}</Hour>;
                 })}
-                {/* {hours.map(({ g, m }) => {
-                  const test = getVisitDateTime(date, g, m);
-                  return (
-                    <Hour key={getVisitDateTime(date, g, m)} className="hour">
-                      {`${g}:${m}`}
-                      {currentUserData.user_metadata &&
-                        currentUserData.user_metadata.map(
-                          ({ visit }) =>
-                            test.isSame(moment(visit)) && (
-                              <Visit className="visit" />
-                            )
-                        )}
-                    </Hour>
-                  );
-                })} */}
               </div>
             </div>
           ))}
