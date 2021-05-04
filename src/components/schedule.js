@@ -13,7 +13,7 @@ import { Loading } from './styles/loading';
 import Hour from './Hour';
 import moment from 'moment';
 
-export default function Schedule({ showModal, setShowModal }) {
+export default function Schedule({ showModal, setShowModal, setCurrentDate }) {
   const { value, setValue, currentUserData } = useContext(Context);
   return (
     <ScheduleWrapper id="schedule">
@@ -54,7 +54,14 @@ export default function Schedule({ showModal, setShowModal }) {
                     ({ start }) => value.isSame(moment(start))
                   );
 
-                  return <Hour key={value} visit={visit}>{`${g}:${m}`}</Hour>;
+                  return (
+                    <Hour
+                      key={value}
+                      visit={visit}
+                      value={value}
+                      setShowModal={setShowModal}
+                      setCurrentDate={setCurrentDate}>{`${g}:${m}`}</Hour>
+                  );
                 })}
               </div>
             </div>

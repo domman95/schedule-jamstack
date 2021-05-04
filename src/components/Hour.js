@@ -39,7 +39,7 @@ const Visit = styled.div`
   height: ${({ length }) => length && `calc(100% * ${length} - 10px)`};
   background-color: white;
   border: 1px solid var(--blue);
-  border-left: 10px solid var(--blue);
+  border-top: 10px solid var(--blue);
   border-radius: 1rem;
   z-index: 1;
   overflow: hidden;
@@ -47,9 +47,36 @@ const Visit = styled.div`
   padding: 1rem;
   transition: transform 0.3s;
 
-  .customer {
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 1.6rem;
     font-weight: bold;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f2f2f2;
+
+    .worker {
+      width: 3rem;
+      height: 3rem;
+
+      img {
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .services {
+    flex: 1;
+    padding: 1rem 0;
+
+    li {
+      list-style: none;
+      font-size: 1.6rem;
+      padding-bottom: 0.1rem;
+    }
   }
 
   .time {
@@ -58,6 +85,8 @@ const Visit = styled.div`
     justify-content: space-between;
     align-items: center;
     color: var(--blue);
+    padding-top: 1rem;
+    border-top: 1px solid #f2f2f2;
 
     .separate {
       border-bottom: 1px dashed var(--blue);
@@ -76,7 +105,13 @@ const INITIAL_STATE = {
   customer: '',
 };
 
-export default function Hour({ children, visit }) {
+export default function Hour({
+  children,
+  visit,
+  setShowModal,
+  setCurrentDate,
+  value,
+}) {
   const [state, setState] = useState(INITIAL_STATE);
 
   const { start, end, customer } = state;
@@ -87,11 +122,6 @@ export default function Hour({ children, visit }) {
     }
   }, []);
 
-  // useEffect(() => {
-  //   visits && setVisit(visits.visit);
-  //   console.log(visit);
-  // }, []);
-
   function lengthOfVisit(visit) {
     const { start, end } = visit;
     const startVisit = moment(start);
@@ -100,13 +130,28 @@ export default function Hour({ children, visit }) {
     return result / 30;
   }
 
+  function handleClick(value) {
+    setShowModal(true);
+    setCurrentDate(value);
+  }
+
   return (
     <Container>
-      <HourStyled>{children}</HourStyled>
-      {/* {visit ? <Visit length={lengthOfVisit(visit)} /> : null} */}
+      <HourStyled onClick={() => handleClick(value)}>{children}</HourStyled>
       {visit && (
         <Visit length={lengthOfVisit(visit)}>
-          <p className="customer">{customer}</p>
+          <div className="title">
+            <p className="name">{customer}</p>
+            <div className="worker">
+              <img
+                src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+                alt=""
+              />
+            </div>
+          </div>
+          <ul className="services">
+            <li>haircut</li>
+          </ul>
           <div className="time">
             <p className="start">{moment(start).format('hh:mm')}</p>
             <div className="separate" />
