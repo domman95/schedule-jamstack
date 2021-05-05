@@ -1,48 +1,64 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby minimal starter
-</h1>
+# SCHEDULE JAMSTACK - [live demo](https://schedule-jamstack.netlify.app/)
 
-## 🚀 Quick start
+---
 
-1.  **Create a Gatsby site.**
+![alt text](https://i.ibb.co/JpWJMB6/schedule-jamstack.png)
 
-    Use the Gatsby CLI to create a new site, specifying the minimal starter.
+---
 
-    ```shell
-    # create a new Gatsby site using the minimal starter
-    npm init gatsby
-    ```
+## Description
 
-2.  **Start developing.**
+**App for better management your customers. There you can create own card for each customer and fast find everything need information about him like:**
 
-    Navigate into your new site’s directory and start it up.
+- history of visits
+- future visits
+- favourite drink (you can surprise your customer with prepared drink)
 
-    ```shell
-    cd my-gatsby-site/
-    npm run develop
-    ```
+---
 
-3.  **Open the code and start customizing!**
+## Usage
 
-    Your site is now running at http://localhost:8000!
+**If you would like to check out the app directly on your computer, please do not hesitate follow the instruction below**
 
-    Edit `src/pages/index.js` to see your site update in real-time!
+### Instalation
 
-4.  **Learn more**
+**1. Clone the repository**
 
-    - [Documentation](https://www.gatsbyjs.com/docs/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+```
+   git clone https://github.com/domman95/schedule-jamstack.git
+```
 
-    - [Tutorials](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+**2. Install NPM packages**
 
-    - [Guides](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+```
+npm install
+```
 
-    - [API Reference](https://www.gatsbyjs.com/docs/api-reference/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+**3. Run develop**
 
-    - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+```
+npm run develop
+```
 
-    - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+**4. Or if you have already installed netlify-cli use the command:**
+
+```
+netlify dev
+```
+
+---
+
+## Stack
+
+- **Gatsby**
+- **Netlify**
+- **Netlify Identity**
+- **Hasura**
+- **Styled-Components**
+- **momentJS**
+
+---
+
+## Contact
+
+**If you have any question please do not hesitate to contact with me!**
