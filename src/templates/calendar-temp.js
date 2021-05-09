@@ -73,7 +73,7 @@ export default function CalendarTemp({ height }) {
 
   useEffect(() => {
     setCurrentDate(value);
-  }, value);
+  }, [value]);
 
   return (
     <Container>
