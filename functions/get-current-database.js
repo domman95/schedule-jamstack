@@ -2,6 +2,13 @@ const { query } = require('../src/utils/hasura');
 
 exports.handler = async (event) => {
   const { email, name } = event.headers;
+  const user_metadata = {
+    visits: [],
+    customers: [{ 'id': '1', 'firstName': 'Joanna', 'lastName': 'Kowalska' }],
+    workers: [],
+  };
+
+  console.log(user_metadata);
 
   const { companies_profiles } = await query({
     query: `
@@ -21,14 +28,16 @@ exports.handler = async (event) => {
   if (result === undefined) {
     const { insert_companies_profiles_one } = await query({
       query: `
-        mutation ($email: String = "", $name: String = "") {
-          insert_companies_profiles_one(object: {email: $email, name: $name}) {
+        mutation ($email: String = "", $name: String = "", $user_metadata: json = []) {
+          insert_companies_profiles_one(object: {email: $email, name: $name, user_metadata: $user_metadata}) {
+            id
             email
             name
+            user_metadata
           }
         }
       `,
-      variables: { name, email },
+      variables: { name, email, user_metadata },
     });
 
     const result = insert_companies_profiles_one;

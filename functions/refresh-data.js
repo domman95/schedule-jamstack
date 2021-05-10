@@ -1,7 +1,7 @@
 const { query } = require('../src/utils/hasura');
 
 exports.handler = async (event) => {
-  const { email, name } = event.headers;
+  const { email } = event.headers;
 
   const { companies_profiles } = await query({
     query: `

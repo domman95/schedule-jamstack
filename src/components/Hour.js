@@ -112,16 +112,6 @@ export default function Hour({
   setCurrentDate,
   value,
 }) {
-  const [state, setState] = useState(INITIAL_STATE);
-
-  const { start, end, customer } = state;
-
-  useEffect(() => {
-    if (visit) {
-      setState({ ...visit });
-    }
-  }, []);
-
   function lengthOfVisit(visit) {
     const { start, end } = visit;
     const startVisit = moment(start);
@@ -141,7 +131,7 @@ export default function Hour({
       {visit && (
         <Visit length={lengthOfVisit(visit)}>
           <div className="title">
-            <p className="name">{customer}</p>
+            <p className="name">{visit.customer}</p>
             <div className="worker">
               <img
                 src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
@@ -153,9 +143,9 @@ export default function Hour({
             <li>haircut</li>
           </ul>
           <div className="time">
-            <p className="start">{moment(start).format('hh:mm')}</p>
+            <p className="start">{moment(visit.start).format('hh:mm')}</p>
             <div className="separate" />
-            <p className="end">{moment(end).format('hh:mm')}</p>
+            <p className="end">{moment(visit.end).format('hh:mm')}</p>
           </div>
         </Visit>
       )}

@@ -58,15 +58,13 @@ export default function App({ location }) {
     return result;
   }
 
-  async function refreshData(userEmail, fullName) {
+  async function refreshData(userEmail) {
     const email = userEmail;
-    const name = fullName;
 
     const result = await fetch('/.netlify/functions/refresh-data', {
       method: 'GET',
       headers: {
         email,
-        name,
       },
     })
       .then((res) => res.json())

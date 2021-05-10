@@ -53,9 +53,13 @@ export default function Schedule({ showModal, setShowModal, setCurrentDate }) {
                 <div className="column">
                   {hours.map(({ g, m }) => {
                     const value = getVisitDateTime(date, g, m);
-                    const visit = currentUserData.user_metadata.visits.find(
-                      ({ start }) => value.isSame(moment(start))
-                    );
+                    const visits = currentUserData.user_metadata
+                      ? currentUserData.user_metadata.visits
+                      : [];
+
+                    const visit = visits.find(({ start }) => {
+                      return value.isSame(moment(start));
+                    });
 
                     return (
                       <Hour

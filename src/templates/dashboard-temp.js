@@ -40,7 +40,7 @@ export default function Dashboard() {
           <div className="data">
             <p className="title">Your visits:</p>
             <ul>
-              {currentUserData.user_metadata ? (
+              {currentUserData.user_metadata.visits.length > 0 ? (
                 currentUserData.user_metadata.visits.map(
                   ({ start, end, customer }) => (
                     <li key={start}>

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import { Context } from 'pages/app';
+import addVisit from '../utils/addVisit';
 
 const Modal = styled.div`
   display: flex;
@@ -98,7 +99,7 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
 
   const { start, end } = visit;
 
-  const { currentUserData } = useContext(Context);
+  const { currentUserData, refreshData } = useContext(Context);
   const { user_metadata } = currentUserData;
   const { customers } = user_metadata;
 
@@ -117,6 +118,7 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    const { email } = currentUserData;
 
     if (
       moment(start).isSame(end) ||
@@ -133,31 +135,34 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
       return;
     }
 
-    console.log(visit);
+    addVisit(email, visit, user_metadata).then(() => refreshData(email));
   }
 
   function hanldeChange(e) {
-    if (e.target.name === 'customer') {
-      setVisit({ ...visit, customer: e.target.value });
-    }
-    if (e.target.name === 'start') {
-      const timeStart = moment(e.target.value);
-      const timeEnd = moment(e.target.value).clone().add(30, 'minutes');
+    const name = e.target.name;
 
-      setVisit({
-        ...visit,
-        start: timeStart,
-        end: timeEnd,
-      });
-    }
+    switch (name) {
+      case 'customer':
+        setVisit({ ...visit, customer: e.target.value });
+        return;
 
-    if (e.target.name === 'end') {
-      const timeEnd = moment(e.target.value);
+      case 'start':
+        setVisit({
+          ...visit,
+          start: moment(e.target.value),
+          end: moment(e.target.value).clone().add(30, 'minutes'),
+        });
+        return;
 
-      setVisit({
-        ...visit,
-        end: timeEnd,
-      });
+      case 'end':
+        setVisit({
+          ...visit,
+          end: moment(e.target.value),
+        });
+        return;
+
+      default:
+        return;
     }
   }
 
@@ -171,7 +176,7 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
         <Form onSubmit={handleSubmit}>
           <label>
             <span>Customer</span>
-            <select name="customer" onChange={(e) => hanldeChange(e)}>
+            <select name="customer" onChange={(e) => hanldeChange(e)} required>
               {currentUserData &&
                 currentUserData.user_metadata &&
                 currentUserData.user_metadata.customers &&
