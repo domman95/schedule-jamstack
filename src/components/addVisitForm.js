@@ -1,51 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
-import { Context } from 'pages/app';
+import { Context } from '../context';
 import addVisit from '../utils/addVisit';
-
-const Modal = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 1rem;
-  background-color: white;
-  z-index: 10;
-  padding: 5rem 2rem 2rem;
-
-  .header {
-    font-size: 1.8rem;
-    border-bottom: 1px solid #cecece;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .cross {
-    position: absolute;
-    width: 3.6rem;
-    height: 3.6rem;
-    top: 1rem;
-    right: 1rem;
-    font-size: 3rem;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-  }
-`;
-
-const Background = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.25);
-  z-index: 10;
-`;
+import Modal from 'components/modal';
 
 const Form = styled.form`
   display: flex;
@@ -55,7 +13,6 @@ const Form = styled.form`
   min-width: 300px;
 
   label {
-    /* position: relative; */
     display: flex;
     flex-direction: column;
     height: 7.5rem;
@@ -105,8 +62,8 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
 
   useEffect(() => {
     const fullName = `${customers[0].firstName} ${customers[0].lastName}`;
-    setVisit({ ...visit, customer: fullName });
-  }, [currentDate]);
+    setVisit((prev) => ({ ...prev, customer: fullName }));
+  }, [currentDate, customers]);
 
   function formatDateIntoInputValue(value) {
     const date = moment(value).format('YYYY-MM-DD');
@@ -143,6 +100,8 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
         alert('This time is not available!');
         return item;
       }
+
+      return result;
     });
 
     if (match) return;
@@ -196,47 +155,45 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
   }
 
   return (
-    <Background>
-      <Modal>
-        <button className="cross" onClick={() => setShowModal(false)}>
-          {String.fromCharCode(215)}
-        </button>
-        <h2 className="header">Add another visit</h2>
-        <Form onSubmit={handleSubmit}>
-          <label>
-            <span>Customer</span>
-            <select name="customer" onChange={(e) => hanldeChange(e)} required>
-              {currentUserData.user_metadata.customers &&
-                currentUserData.user_metadata.customers.map(
-                  ({ id, firstName, lastName }) => (
-                    <option key={id}>
-                      {firstName} {lastName}
-                    </option>
-                  )
-                )}
-            </select>
-          </label>
-          <label>
-            <span>Start</span>
-            <input
-              type="datetime-local"
-              name="start"
-              value={formatDateIntoInputValue(start)}
-              onChange={(e) => hanldeChange(e)}
-            />
-          </label>
-          <label>
-            <span>End</span>
-            <input
-              type="datetime-local"
-              name="end"
-              value={formatDateIntoInputValue(end)}
-              onChange={(e) => hanldeChange(e)}
-            />
-          </label>
-          <input type="submit" name="" value="Add another visit" />
-        </Form>
-      </Modal>
-    </Background>
+    <Modal>
+      <button className="cross" onClick={() => setShowModal(false)}>
+        {String.fromCharCode(215)}
+      </button>
+      <h2 className="header">Add another visit</h2>
+      <Form onSubmit={handleSubmit}>
+        <label>
+          <span>Customer</span>
+          <select name="customer" onBlur={(e) => hanldeChange(e)} required>
+            {currentUserData.user_metadata.customers &&
+              currentUserData.user_metadata.customers.map(
+                ({ id, firstName, lastName }) => (
+                  <option key={id}>
+                    {firstName} {lastName}
+                  </option>
+                )
+              )}
+          </select>
+        </label>
+        <label>
+          <span>Start</span>
+          <input
+            type="datetime-local"
+            name="start"
+            value={formatDateIntoInputValue(start)}
+            onChange={(e) => hanldeChange(e)}
+          />
+        </label>
+        <label>
+          <span>End</span>
+          <input
+            type="datetime-local"
+            name="end"
+            value={formatDateIntoInputValue(end)}
+            onChange={(e) => hanldeChange(e)}
+          />
+        </label>
+        <input type="submit" name="" value="Add another visit" />
+      </Form>
+    </Modal>
   );
 }

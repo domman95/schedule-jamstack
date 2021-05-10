@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import buildCalendar, { prevMonth, nextMonth } from 'utils/buildCalendar';
-import { Context } from 'pages/app';
+import { Context } from '../context';
 import { devices } from 'utils/breakpoints';
 
 const CalendarWrapper = styled.div`
@@ -13,11 +13,11 @@ const CalendarWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    p {
+    .headTitle {
+      border: none;
+      background-color: transparent;
       font-weight: bold;
       font-size: 1.6rem;
-      cursor: pointer;
-
       &:hover {
         text-decoration: underline;
       }
@@ -124,9 +124,9 @@ export default function Calendar() {
   return (
     <CalendarWrapper id="calendar" show={show}>
       <div className="header">
-        <p className="headTitle" onClick={() => setShow(!show)}>
+        <button className="headTitle" onClick={() => setShow(!show)}>
           {value.format('MMMM YYYY')}
-        </p>
+        </button>
         <div className="buttons">
           <button
             className="prevDate"
@@ -155,7 +155,10 @@ export default function Calendar() {
                 {week.map((day) => (
                   <div
                     key={day._d}
+                    role="button"
+                    tabIndex={0}
                     onClick={() => setValue(day)}
+                    onKeyDown={() => setValue(day)}
                     className={`days ${
                       today.isSame(day, 'day')
                         ? 'today'

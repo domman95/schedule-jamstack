@@ -8,8 +8,6 @@ exports.handler = async (event) => {
     workers: [],
   };
 
-  console.log(user_metadata);
-
   const { companies_profiles } = await query({
     query: `
       query {
@@ -36,6 +34,7 @@ exports.handler = async (event) => {
             user_metadata
           }
         }
+
       `,
       variables: { name, email, user_metadata },
     });

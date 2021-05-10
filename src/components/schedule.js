@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Context } from 'pages/app';
+import { Context } from '../context';
 import { hours } from 'utils/hours';
 import { nextWeek, prevWeek } from 'utils/buildCalendar';
 import {

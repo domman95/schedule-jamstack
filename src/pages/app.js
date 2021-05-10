@@ -10,13 +10,12 @@ import netlifyIdentity from 'netlify-identity-widget';
 import styled from 'styled-components';
 import Nav from 'components/nav';
 import moment from 'moment';
+import { Context } from '../context';
 
 const AppWrapper = styled.main`
   padding: 9rem 2rem 2rem;
   height: 100vh;
 `;
-
-export const Context = React.createContext();
 
 export default function App({ location }) {
   const [value, setValue] = useState(moment());
@@ -29,6 +28,9 @@ export default function App({ location }) {
   });
 
   useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
     const isLoggedIn = netlifyIdentity.currentUser();
 
     if (!isLoggedIn && location.pathname !== '/app/') {
@@ -39,24 +41,23 @@ export default function App({ location }) {
     const { email } = isLoggedIn;
     const { full_name } = isLoggedIn.user_metadata;
 
-    checkIsFirstLogIn(email, full_name)
+    fetch('/.netlify/functions/get-current-database', {
+      method: 'GET',
+      signal: signal,
+      headers: {
+        email,
+        name: full_name,
+      },
+    })
       .then((res) => res.json())
       .then((data) =>
-        setContextData({ ...contextData, currentUserData: data })
+        setContextData((prev) => ({ ...prev, currentUserData: data }))
       );
-  }, []);
 
-  async function checkIsFirstLogIn(userEmail, fullName) {
-    const result = await fetch('/.netlify/functions/get-current-database', {
-      method: 'GET',
-      headers: {
-        email: userEmail,
-        name: fullName,
-      },
-    });
-
-    return result;
-  }
+    return function cleanup() {
+      abortController.abort();
+    };
+  }, [location]);
 
   async function refreshData(userEmail) {
     const email = userEmail;

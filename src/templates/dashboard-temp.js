@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Loading } from 'components/styles/loading';
-import { Context } from 'pages/app';
+import { Context } from '../context';
 
 const Container = styled.div`
   margin: 0 auto;

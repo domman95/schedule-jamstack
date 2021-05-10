@@ -11,7 +11,9 @@ const WorkersWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    p {
+    .headTitle {
+      border: none;
+      background-color: transparent;
       font-weight: bold;
       font-size: 1.6rem;
     }
@@ -63,9 +65,9 @@ export default function Workers() {
   return (
     <WorkersWrapper id="workers" show={show}>
       <div className="header">
-        <p className="headTitle" onClick={() => setShow(!show)}>
+        <button className="headTitle" onClick={() => setShow(!show)}>
           Workers
-        </p>
+        </button>
         <div className="buttons">
           <button className="addWorker">{String.fromCharCode(43)}</button>
         </div>

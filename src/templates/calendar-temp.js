@@ -5,7 +5,8 @@ import Calendar from 'components/calendar';
 import Schedule from 'components/schedule';
 import Workers from 'components/workersList';
 import { devices } from 'utils/breakpoints';
-import { Context } from 'pages/app';
+import { Context } from '../context';
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
