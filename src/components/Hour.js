@@ -53,18 +53,14 @@ const Visit = styled.div`
     align-items: center;
     font-size: 1.6rem;
     font-weight: bold;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #f2f2f2;
 
-    .worker {
-      width: 3rem;
-      height: 3rem;
-
-      img {
-        border-radius: 50%;
-        width: 100%;
-        height: 100%;
-      }
+    .time {
+      font-size: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--blue);
     }
   }
 
@@ -79,31 +75,10 @@ const Visit = styled.div`
     }
   }
 
-  .time {
-    font-size: 1.4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--blue);
-    padding-top: 1rem;
-    border-top: 1px solid #f2f2f2;
-
-    .separate {
-      border-bottom: 1px dashed var(--blue);
-      flex: 1;
-      margin: 0 1rem;
-    }
-  }
-
   &:hover {
     transform: scale(1.01);
   }
 `;
-const INITIAL_STATE = {
-  start: '',
-  end: '',
-  customer: '',
-};
 
 export default function Hour({
   children,
@@ -132,21 +107,14 @@ export default function Hour({
         <Visit length={lengthOfVisit(visit)}>
           <div className="title">
             <p className="name">{visit.customer}</p>
-            <div className="worker">
-              <img
-                src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
-                alt=""
-              />
+            <div className="time">
+              <p className="start">{moment(visit.start).format('HH:mm')}</p>
+              <p className="end">{moment(visit.end).format('HH:mm')}</p>
             </div>
           </div>
           <ul className="services">
             <li>haircut</li>
           </ul>
-          <div className="time">
-            <p className="start">{moment(visit.start).format('hh:mm')}</p>
-            <div className="separate" />
-            <p className="end">{moment(visit.end).format('hh:mm')}</p>
-          </div>
         </Visit>
       )}
     </Container>

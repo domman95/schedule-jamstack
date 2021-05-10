@@ -120,6 +120,33 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
     e.preventDefault();
     const { email } = currentUserData;
 
+    const match = user_metadata.visits.find((item) => {
+      const currentStart = item.start;
+      const currentEnd = item.end;
+
+      // start is same as currentStart and start is same or before currentEnd
+      const x =
+        moment(start).isSame(currentStart) &&
+        moment(start).isSameOrBefore(currentEnd);
+
+      // start is between currentStart and currentEnd
+      const y = moment(start).isBetween(currentStart, currentEnd);
+
+      // end is same or after currentStart and start is same or before currentEnd
+      const z =
+        moment(end).isSameOrAfter(currentStart) &&
+        moment(start).isBefore(currentEnd);
+
+      const result = x || y || z;
+
+      if (result) {
+        alert('This time is not available!');
+        return item;
+      }
+    });
+
+    if (match) return;
+
     if (
       moment(start).isSame(end) ||
       moment(end).isSameOrBefore(moment(start).clone().add(29, 'minutes'))
@@ -135,7 +162,9 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
       return;
     }
 
-    addVisit(email, visit, user_metadata).then(() => refreshData(email));
+    addVisit(email, visit, user_metadata)
+      .then(() => refreshData(email))
+      .catch((err) => console.log(err));
   }
 
   function hanldeChange(e) {
@@ -177,9 +206,7 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
           <label>
             <span>Customer</span>
             <select name="customer" onChange={(e) => hanldeChange(e)} required>
-              {currentUserData &&
-                currentUserData.user_metadata &&
-                currentUserData.user_metadata.customers &&
+              {currentUserData.user_metadata.customers &&
                 currentUserData.user_metadata.customers.map(
                   ({ id, firstName, lastName }) => (
                     <option key={id}>
