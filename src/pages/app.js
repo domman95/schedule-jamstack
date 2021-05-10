@@ -52,7 +52,8 @@ export default function App({ location }) {
       .then((res) => res.json())
       .then((data) =>
         setContextData((prev) => ({ ...prev, currentUserData: data }))
-      );
+      )
+      .catch((err) => console.log(err));
 
     return function cleanup() {
       abortController.abort();
