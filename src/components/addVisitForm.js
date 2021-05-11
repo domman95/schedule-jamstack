@@ -61,6 +61,7 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
     currentUserData,
     refreshData,
     setMessage,
+    setIsFailed,
     setProcessing,
     setTextMessage,
   } = useContext(Context);
@@ -103,7 +104,9 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
       const result = x || y || z;
 
       if (result) {
-        alert('This time is not available!');
+        setMessage(true);
+        setTextMessage('This time is not available');
+        setIsFailed(true);
         return item;
       }
 
@@ -116,14 +119,18 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
       moment(start).isSame(end) ||
       moment(end).isSameOrBefore(moment(start).clone().add(29, 'minutes'))
     ) {
-      alert(
+      setMessage(true);
+      setTextMessage(
         'The visit is too short! Minimum time for one visit is 30 minutes!'
       );
+      setIsFailed(true);
       return;
     }
 
     if (moment(start).isSameOrAfter(end)) {
-      alert('The visit time is wrong! Check the end time of visit!');
+      setMessage(true);
+      setTextMessage('The visit time is wrong! Check the end time of visit!');
+      setIsFailed(true);
       return;
     }
 

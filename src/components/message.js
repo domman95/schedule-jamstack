@@ -9,17 +9,17 @@ const Container = styled.div`
   position: fixed;
   bottom: 1rem;
   right: 1rem;
-  background-color: palegreen;
-  border-left: 10px solid lightgreen;
+  background-color: ${({ failed }) => (failed ? 'coral' : 'palegreen')};
+  border-left: ${({ failed }) =>
+    failed ? '10px solid crimson' : '10px solid lightgreen'};
   z-index: 20;
   transform: translateX(110%);
   border-radius: 1rem;
-  padding: 2.5rem 4rem;
+  padding: 2.5rem 3rem;
   animation: show 0.3s ease-in forwards;
 
   p {
-    font-size: 1.4rem;
-    max-width: 240px;
+    font-size: 1.6rem;
   }
 
   @keyframes show {
@@ -33,15 +33,21 @@ const Container = styled.div`
 `;
 
 export default function Message() {
-  const { isMessage, setMessage, textMessage, setTextMessage } = useContext(
-    Context
-  );
+  const {
+    isMessage,
+    setMessage,
+    textMessage,
+    setTextMessage,
+    isFailed,
+    setIsFailed,
+  } = useContext(Context);
 
   useEffect(() => {
     function clearMessage() {
       setTimeout(() => {
         setMessage(false);
         setTextMessage('');
+        setIsFailed(false);
       }, 3000);
     }
 
@@ -55,7 +61,7 @@ export default function Message() {
   return (
     <>
       {isMessage && (
-        <Container>
+        <Container failed={isFailed}>
           <p>{textMessage}</p>
         </Container>
       )}

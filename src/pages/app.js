@@ -23,6 +23,7 @@ export default function App({ location }) {
   const [value, setValue] = useState(moment());
   const [newVisit, setNewVisit] = useState({});
   const [isMessage, setMessage] = useState(false);
+  const [isFailed, setIsFailed] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [textMessage, setTextMessage] = useState('');
   const [contextData, setContextData] = useState({
@@ -65,7 +66,10 @@ export default function App({ location }) {
         setMessage(true);
         setTextMessage('Data has been loaded successfully!');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setIsFailed(true);
+      });
 
     return function cleanup() {
       abortController.abort();
@@ -101,6 +105,8 @@ export default function App({ location }) {
           textMessage,
           setTextMessage,
           setProcessing,
+          isFailed,
+          setIsFailed,
         }}>
         <Message />
         {processing && <ProcessingData />}
