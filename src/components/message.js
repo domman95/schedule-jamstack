@@ -9,17 +9,43 @@ const Container = styled.div`
   position: fixed;
   bottom: 1rem;
   right: 1rem;
-  background-color: ${({ failed }) => (failed ? 'coral' : 'palegreen')};
-  border-left: ${({ failed }) =>
-    failed ? '10px solid crimson' : '10px solid lightgreen'};
   z-index: 20;
+  background-color: white;
   transform: translateX(110%);
   border-radius: 1rem;
   padding: 2.5rem 3rem;
   animation: show 0.3s ease-in forwards;
 
-  p {
+  .sign {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: ${({ failed }) => (failed ? 'coral' : 'lightgreen')};
+
+    .mark {
+      font-size: 1.6rem;
+      color: white;
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    height: 80%;
+    border: ${({ failed }) =>
+      failed ? '4px solid coral' : '4px solid lightgreen'};
+    border-radius: 1rem;
+  }
+
+  .text {
     font-size: 1.6rem;
+    padding-left: 1rem;
   }
 
   @keyframes show {
@@ -48,7 +74,7 @@ export default function Message() {
         setMessage(false);
         setTextMessage('');
         setIsFailed(false);
-      }, 3000);
+      }, 5000);
     }
 
     clearMessage();
@@ -62,7 +88,14 @@ export default function Message() {
     <>
       {isMessage && (
         <Container failed={isFailed}>
-          <p>{textMessage}</p>
+          <div className="sign">
+            {isFailed ? (
+              <p className="mark">&#10008;</p>
+            ) : (
+              <p className="mark">&#10004;</p>
+            )}
+          </div>
+          <p className="text">{textMessage}</p>
         </Container>
       )}
     </>
