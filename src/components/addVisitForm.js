@@ -44,6 +44,7 @@ const Form = styled.form`
     color: white;
     font-size: 1.6rem;
     margin-top: 2rem;
+    cursor: pointer;
   }
 `;
 
@@ -56,7 +57,13 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
 
   const { start, end } = visit;
 
-  const { currentUserData, refreshData } = useContext(Context);
+  const {
+    currentUserData,
+    refreshData,
+    setMessage,
+    setProcessing,
+    setTextMessage,
+  } = useContext(Context);
   const { user_metadata } = currentUserData;
   const { customers } = user_metadata;
 
@@ -91,8 +98,7 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
 
       // end is same or after currentStart and start is same or before currentEnd
       const z =
-        moment(end).isSameOrAfter(currentStart) &&
-        moment(start).isBefore(currentEnd);
+        moment(end).isAfter(currentStart) && moment(start).isBefore(currentEnd);
 
       const result = x || y || z;
 
@@ -121,8 +127,16 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
       return;
     }
 
+    setProcessing(true);
+
     addVisit(email, visit, user_metadata)
       .then(() => refreshData(email))
+      .then(() => {
+        setProcessing(false);
+        setMessage(true);
+        setTextMessage('The visit has been created successfully!');
+      })
+      .then(() => setShowModal(false))
       .catch((err) => console.log(err));
   }
 

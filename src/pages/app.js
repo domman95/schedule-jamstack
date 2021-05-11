@@ -5,6 +5,8 @@ import Layout from 'components/layout';
 import PrivateRoute from 'components/private-route';
 import Dashboard from 'templates/dashboard-temp';
 import Calendar from 'templates/calendar-temp';
+import Message from 'components/message';
+import ProcessingData from '../components/processingData';
 import CustomerCards from 'templates/customer-cards-temp';
 import netlifyIdentity from 'netlify-identity-widget';
 import styled from 'styled-components';
@@ -20,6 +22,9 @@ const AppWrapper = styled.main`
 export default function App({ location }) {
   const [value, setValue] = useState(moment());
   const [newVisit, setNewVisit] = useState({});
+  const [isMessage, setMessage] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [textMessage, setTextMessage] = useState('');
   const [contextData, setContextData] = useState({
     setValue,
     newVisit,
@@ -50,15 +55,22 @@ export default function App({ location }) {
       },
     })
       .then((res) => res.json())
-      .then((data) =>
-        setContextData((prev) => ({ ...prev, currentUserData: data }))
-      )
+      .then((data) => {
+        setContextData((prev) => ({
+          ...prev,
+          currentUserData: data,
+        }));
+      })
+      .then(() => {
+        setMessage(true);
+        setTextMessage('Data has been loaded successfully!');
+      })
       .catch((err) => console.log(err));
 
     return function cleanup() {
       abortController.abort();
     };
-  }, [location]);
+  }, []);
 
   async function refreshData(userEmail) {
     const email = userEmail;
@@ -80,7 +92,18 @@ export default function App({ location }) {
   return (
     <Layout>
       <Nav />
-      <Context.Provider value={{ ...contextData, value }}>
+      <Context.Provider
+        value={{
+          ...contextData,
+          value,
+          isMessage,
+          setMessage,
+          textMessage,
+          setTextMessage,
+          setProcessing,
+        }}>
+        <Message />
+        {processing && <ProcessingData />}
         <AppWrapper>
           <Router>
             <PrivateRoute path="/app/dashboard" component={Dashboard} />
