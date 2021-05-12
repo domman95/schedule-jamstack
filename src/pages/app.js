@@ -21,28 +21,24 @@ const AppWrapper = styled.main`
 
 export default function App({ location }) {
   const [value, setValue] = useState(moment());
-  const [newVisit, setNewVisit] = useState({});
   const [isMessage, setMessage] = useState(false);
   const [isFailed, setIsFailed] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [textMessage, setTextMessage] = useState('');
   const [contextData, setContextData] = useState({
     setValue,
-    newVisit,
-    setNewVisit,
     refreshData,
+    setMessage,
+    setIsFailed,
+    setTextMessage,
+    setProcessing,
   });
+
+  const isLoggedIn = netlifyIdentity.currentUser();
 
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
-
-    const isLoggedIn = netlifyIdentity.currentUser();
-
-    if (!isLoggedIn && location.pathname !== '/app/') {
-      navigate('/');
-      return null;
-    }
 
     const { email } = isLoggedIn;
     const { full_name } = isLoggedIn.user_metadata;
@@ -74,7 +70,12 @@ export default function App({ location }) {
     return function cleanup() {
       abortController.abort();
     };
-  }, []);
+  }, [isLoggedIn]);
+
+  if (!isLoggedIn && location.pathname !== '/app/') {
+    navigate('/');
+    return null;
+  }
 
   async function refreshData(userEmail) {
     const email = userEmail;
@@ -101,14 +102,10 @@ export default function App({ location }) {
           ...contextData,
           value,
           isMessage,
-          setMessage,
           textMessage,
-          setTextMessage,
-          setProcessing,
           isFailed,
-          setIsFailed,
         }}>
-        <Message />
+        {isMessage && <Message />}
         {processing && <ProcessingData />}
         <AppWrapper>
           <Router>

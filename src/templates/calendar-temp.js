@@ -6,7 +6,6 @@ import Schedule from 'components/schedule';
 import Workers from 'components/workersList';
 import { devices } from 'utils/breakpoints';
 import { Context } from '../context';
-import { Loading } from '../components/styles/loading';
 
 const Container = styled.div`
   display: flex;

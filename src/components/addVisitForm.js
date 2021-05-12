@@ -86,20 +86,21 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
     const { email } = currentUserData;
 
     const match = user_metadata.visits.find((item) => {
-      const currentStart = item.start;
-      const currentEnd = item.end;
+      const existingStart = item.start; // existing visits
+      const existingEnd = item.end; // existing visits
 
-      // start is same as currentStart and start is same or before currentEnd
+      // start is same as existing start and start is same or before existing end
       const x =
-        moment(start).isSame(currentStart) &&
-        moment(start).isSameOrBefore(currentEnd);
+        moment(start).isSame(existingStart) &&
+        moment(start).isSameOrBefore(existingEnd);
 
-      // start is between currentStart and currentEnd
-      const y = moment(start).isBetween(currentStart, currentEnd);
+      // start is between existing start and existing end
+      const y = moment(start).isBetween(existingStart, existingEnd);
 
-      // end is same or after currentStart and start is same or before currentEnd
+      // end is same or after existing start and start is same or before existing end
       const z =
-        moment(end).isAfter(currentStart) && moment(start).isBefore(currentEnd);
+        moment(end).isAfter(existingStart) &&
+        moment(start).isBefore(existingEnd);
 
       const result = x || y || z;
 
