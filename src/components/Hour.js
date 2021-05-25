@@ -84,6 +84,8 @@ export default function Hour({
   visit,
   setShowModal,
   setCurrentDate,
+  setCurrentVisit,
+  setModalParam,
   value,
 }) {
   function lengthOfVisit(visit) {
@@ -94,16 +96,30 @@ export default function Hour({
     return result / 30;
   }
 
-  function handleClick(value) {
+  function handleClick(value, param) {
+    setModalParam(param);
     setShowModal(true);
-    setCurrentDate(value);
+    switch (param) {
+      case 'add-visit':
+        setCurrentDate(value);
+        return;
+      case 'edit-visit':
+        setCurrentVisit(value);
+        return;
+      default:
+        return;
+    }
   }
 
   return (
     <Container>
-      <HourStyled onClick={() => handleClick(value)}>{children}</HourStyled>
+      <HourStyled onClick={() => handleClick(value, 'add-visit')}>
+        {children}
+      </HourStyled>
       {visit && (
-        <Visit length={lengthOfVisit(visit)}>
+        <Visit
+          length={lengthOfVisit(visit)}
+          onClick={() => handleClick(visit, 'edit-visit')}>
           <div className="title">
             <p className="name">{visit.customer}</p>
             <div className="time">

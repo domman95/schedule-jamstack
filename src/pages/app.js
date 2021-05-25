@@ -40,40 +40,42 @@ export default function App({ location }) {
     const abortController = new AbortController();
     const signal = abortController.signal;
 
-    const { email } = isLoggedIn;
-    const { full_name } = isLoggedIn.user_metadata;
+    if (isLoggedIn) {
+      const { email } = isLoggedIn || '';
+      const { full_name } = isLoggedIn && isLoggedIn.user_metadata;
 
-    fetch('/.netlify/functions/get-current-database', {
-      method: 'GET',
-      signal: signal,
-      headers: {
-        email,
-        name: full_name,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setContextData((prev) => ({
-          ...prev,
-          currentUserData: data,
-        }));
+      fetch('/.netlify/functions/get-current-database', {
+        method: 'GET',
+        signal: signal,
+        headers: {
+          email,
+          name: full_name,
+        },
       })
-      .then(() => {
-        setMessage(true);
-        setTextMessage('Data has been loaded successfully!');
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsFailed(true);
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          setContextData((prev) => ({
+            ...prev,
+            currentUserData: data,
+          }));
+        })
+        .then(() => {
+          setMessage(true);
+          setTextMessage('Data has been loaded successfully!');
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsFailed(true);
+        });
 
-    return function cleanup() {
-      abortController.abort();
-    };
+      return function cleanup() {
+        abortController.abort();
+      };
+    }
   }, [isLoggedIn]);
 
   if (!isLoggedIn && location.pathname !== '/app/') {
-    navigate('/');
+    navigate('/app/dashboard', { replace: true });
     return null;
   }
 

@@ -26,7 +26,8 @@
     "node-fetch": "^2.6.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "styled-components": "^5.2.3"
+    "styled-components": "^5.2.3",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "gatsby-plugin-root-import": "^2.0.6"

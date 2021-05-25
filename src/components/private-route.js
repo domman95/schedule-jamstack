@@ -10,7 +10,7 @@ export default function PrivateRoute({
   const isLoggedIn = netlifyIdentity.currentUser();
 
   if (!isLoggedIn && location.pathname !== '/app/') {
-    navigate('/');
+    navigate('/', { replace: true });
     return null;
   }
 

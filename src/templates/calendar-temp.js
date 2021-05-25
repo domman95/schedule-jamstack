@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import AddVisitForm from 'components/addVisitForm';
+import EditVisitForm from 'components/editVisitForm';
 import Calendar from 'components/calendar';
 import Schedule from 'components/schedule';
 import Workers from 'components/workersList';
 import { devices } from 'utils/breakpoints';
 import { Context } from '../context';
+import Modal from '../components/modal';
 
 const Container = styled.div`
   display: flex;
@@ -69,24 +71,47 @@ const Container = styled.div`
 
 export default function CalendarTemp({ height }) {
   const [showModal, setShowModal] = useState(false);
+  const [modalParam, setModalParam] = useState('');
   const [currentDate, setCurrentDate] = useState();
+  const [currentVisit, setCurrentVisit] = useState();
   const { value } = useContext(Context);
 
   useEffect(() => {
+    console.log(currentVisit);
     setCurrentDate(value);
   }, [value]);
+
+  const modalSwitch = (param) => {
+    switch (param) {
+      case 'add-visit':
+        return (
+          <AddVisitForm setShowModal={setShowModal} currentDate={currentDate} />
+        );
+      case 'edit-visit':
+        return (
+          <EditVisitForm
+            setShowModal={setShowModal}
+            currentVisit={currentVisit}
+          />
+        );
+      default:
+        break;
+    }
+  };
 
   return (
     <Container>
       <Calendar />
       <Workers height={height} />
       <Schedule
+        setModalParam={setModalParam}
         showModal={showModal}
         setShowModal={setShowModal}
         setCurrentDate={setCurrentDate}
+        setCurrentVisit={setCurrentVisit}
       />
       {showModal && (
-        <AddVisitForm setShowModal={setShowModal} currentDate={currentDate} />
+        <Modal setShowModal={setShowModal}>{modalSwitch(modalParam)}</Modal>
       )}
     </Container>
   );

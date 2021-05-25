@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { Context } from '../context';
 import addVisit from '../utils/addVisit';
-import { v4 as uuidv4 } from 'uuid';
 import { formatDateIntoInputValue } from '../utils/formatDateIntoInputValue';
+import editVisit from '../utils/editVisit';
 
 const Form = styled.form`
   display: flex;
@@ -49,31 +49,22 @@ const Form = styled.form`
   }
 `;
 
-export default function AddVisitForm({ setShowModal, currentDate }) {
+export default function EditVisitForm({ setShowModal, currentVisit }) {
   const [visit, setVisit] = useState({
-    id: uuidv4(),
-    customer: '',
-    start: currentDate,
-    end: moment(currentDate).clone().add(30, 'minutes'),
+    ...currentVisit,
   });
 
-  const { start, end } = visit;
+  const { customer, start, end } = visit;
 
   const {
     currentUserData,
     refreshData,
     setMessage,
-    setIsFailed,
     setProcessing,
     setTextMessage,
+    setIsFailed,
   } = useContext(Context);
   const { user_metadata } = currentUserData;
-  const { customers } = user_metadata;
-
-  useEffect(() => {
-    const fullName = `${customers[0].firstName} ${customers[0].lastName}`;
-    setVisit((prev) => ({ ...prev, customer: fullName }));
-  }, [currentDate, customers]);
 
   function handleChange(e) {
     const name = e.target.name;
@@ -105,6 +96,7 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+
     const { email } = currentUserData;
 
     const match = user_metadata.visits.find((item) => {
@@ -159,12 +151,12 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
 
     setProcessing(true);
 
-    addVisit(email, visit, user_metadata)
+    editVisit(email, visit, user_metadata)
       .then(() => refreshData(email))
       .then(() => {
         setProcessing(false);
         setMessage(true);
-        setTextMessage('The visit has been created successfully!');
+        setTextMessage('The visit has been updated successfully!');
       })
       .then(() => setShowModal(false))
       .catch((err) => console.log(err));
@@ -172,11 +164,15 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
 
   return (
     <>
-      <h2 className="header">Add another visit</h2>
+      <h2 className="header">Edit visit</h2>
       <Form onSubmit={handleSubmit}>
         <label>
           <span>Customer</span>
-          <select name="customer" onBlur={(e) => handleChange(e)} required>
+          <select
+            defaultChecked={customer}
+            name="customer"
+            onBlur={(e) => handleChange(e)}
+            required>
             {currentUserData.user_metadata.customers &&
               currentUserData.user_metadata.customers.map(
                 ({ id, firstName, lastName }) => (
@@ -205,7 +201,7 @@ export default function AddVisitForm({ setShowModal, currentDate }) {
             onChange={(e) => handleChange(e)}
           />
         </label>
-        <input type="submit" name="" value="Add another visit" />
+        <input type="submit" name="" value="Update visit" />
       </Form>
     </>
   );

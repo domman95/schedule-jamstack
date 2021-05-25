@@ -44,10 +44,15 @@ const ModalStyled = styled.div`
   }
 `;
 
-export default function Modal({ children }) {
+export default function Modal({ children, setShowModal }) {
   return (
     <Background>
-      <ModalStyled>{children}</ModalStyled>
+      <ModalStyled>
+        <button className="cross" onClick={() => setShowModal(false)}>
+          {String.fromCharCode(215)}
+        </button>
+        {children}
+      </ModalStyled>
     </Background>
   );
 }
