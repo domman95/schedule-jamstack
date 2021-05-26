@@ -77,7 +77,6 @@ export default function CalendarTemp({ height }) {
   const { value } = useContext(Context);
 
   useEffect(() => {
-    console.log(currentVisit);
     setCurrentDate(value);
   }, [value]);
 

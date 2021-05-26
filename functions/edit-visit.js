@@ -4,20 +4,10 @@ exports.handler = async (event) => {
   const { email, dataToEdit, currentData } = JSON.parse(event.body);
   const { visits, customers, workers } = currentData;
 
-  const x = visits.find((item) => {
-    if (item.id === dataToEdit.id) {
-      item.customer = dataToEdit.customer;
-      item.start = dataToEdit.start;
-      item.end = dataToEdit.end;
-
-      return item;
-    }
-  });
-
   const y = visits.filter((item) => item.id !== dataToEdit.id);
 
   const user_metadata = {
-    visits: [...y, { ...x }],
+    visits: [...y, { ...dataToEdit }],
     customers,
     workers,
   };

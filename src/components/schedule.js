@@ -21,6 +21,12 @@ export default function Schedule({
   setModalParam,
 }) {
   const { value, setValue, currentUserData } = useContext(Context);
+
+  const handleClick = () => {
+    setShowModal(!showModal);
+    setModalParam('add-visit');
+  };
+
   return (
     <ScheduleWrapper id="schedule">
       {currentUserData ? (
@@ -42,9 +48,7 @@ export default function Schedule({
               </div>
             </div>
             <div className="manageScheduleButtons">
-              <button
-                className="addVisit"
-                onClick={() => setShowModal(!showModal)}>
+              <button className="addVisit" onClick={handleClick}>
                 Add another visit
               </button>
             </div>

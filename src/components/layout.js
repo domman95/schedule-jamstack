@@ -22,6 +22,12 @@ const GlobalStyle = createGlobalStyle`
     font-size: 10px;
     background-color: #f2f2f2;
   }
+
+  button,
+  input,
+  option {
+    -webkit-appearance: none;
+  }
 `;
 
 export default function Layout({ children }) {
